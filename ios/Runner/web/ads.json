@@ -1,0 +1,65 @@
+{
+    "ads": [{
+            "placement_reference_id": "LOCAL01",
+            "ad_markup": {
+            "id": "5c8f63fb99de0200012544c8",
+            "campaign": "5a2ece4fa9fcaec31300000e|5a394d79341de2f34000005d|datasci--blr_20180908_cp_cts_dm_gdpr_explore04__4.69.1-exper-hourofday-dm-gdpr--success--meister|5c8f63fb99de0200012544c8",
+            "app_id": "$0${\"app_id\":\"5a2ecc62d588e7e213000112\",\"eventID\":\"5c8f63fb99de0200012544c8\"}",
+            "expiry": ${expiry},
+            "tpat": {
+            "moat": {
+            "is_enabled": false,
+            "extra_vast": ""
+            },
+            "play_percentage": [{
+                                "checkpoint": 0.25,
+                                "urls": []
+                                }, {
+                                "checkpoint": 0,
+                                "urls": []
+                                }, {
+                                "checkpoint": 1,
+                                "urls": []
+                                }, {
+                                "checkpoint": 0.75,
+                                "urls": []
+                                }, {
+                                "checkpoint": 0.50,
+                                "urls": []
+                                }],
+            "mute": [],
+            "unmute": [],
+            "video_close": [],
+            "postroll_click": [],
+            "postroll_view": []
+            },
+            "delay": 0,
+            "showClose": 2,
+            "showCloseIncentivized": 2,
+            "countdown": 4,
+            "url": "${videoURL}",
+            "videoWidth": 1280,
+            "videoHeight": 720,
+            "md5": "fake_md5",
+            "postBundle": "${postBundle}",
+            "cta_overlay": {
+            "enabled": false,
+            "show_onclick": false,
+            "time_enabled": 0,
+            "time_show": 0,
+            "click_area": 1
+            },
+            "callToActionDest": "https://itunes.apple.com/us/app/wikipedia/id324715238?mt=8",
+            "callToActionUrl": "https://itunes.apple.com/us/app/wikipedia/id324715238?mt=8",
+            "adType": "vungle_local",
+            "ad_market_id": "1096834193",
+            "chk": "fake_chk",
+            "retryCount": 3,
+            "asyncThreshold": 40,
+            "ad_token": "eyJjYW1wYWlnbiI6IjVhMmVjZTRmYTlmY2FlYzMxMzAwMDAwZXw1YTM5NGQ3OTM0MWRlMmYzNDAwMDAwNWR8ZGF0YXNjaS0tYmxyXzIwMTgwOTA4X2NwX2N0c19kbV9nZHByX2V4cGxvcmUwNF9fNC42OS4xLWV4cGVyLWhvdXJvZmRheS1kbS1nZHByLS1zdWNjZXNzLS1tZWlzdGVyfDVjOGY2M2ZiOTlkZTAyMDAwMTI1NDRjOCJ9",
+            "video_object_id": "5c34f7399f418e6ef440742d",
+            "requires_sideloading": false,
+            "bid_token": "bi7m7v3apjnvok02dlag"
+            }
+            }]
+}
