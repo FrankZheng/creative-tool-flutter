@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'dart:async';
+import 'web_server.dart';
+import 'sdk_manager.dart';
+import 'utils.dart';
 
 class HomeView extends StatefulWidget {
 
@@ -8,19 +12,99 @@ class HomeView extends StatefulWidget {
 }
 
 
-class HomeViewState extends State<HomeView> {
-  String _serverURL = '';
-  String _sdkVersion = '';
+class HomeViewState extends State<HomeView> implements WebServerListener, SDKDelegate {
+  final WebServer _webServer = WebServer.shared;
+  final SDKManager _sdkManager = SDKManager.shared;
+
+  String _serverURL;
+  String _sdkVersion;
   bool _playBtnEnabled = false;
   String _endCardName;
   bool _playingAd = false;
 
+  //for switch sdk version
   void _onSwitchSDKVersion() {
 
   }
 
+  //for play ad
   void _onPlayAd() {
-    
+    _sdkManager.playAd();
+  }
+
+  void init() async {
+    _sdkManager.addDelegate(this);
+    var sdkVersion = await _sdkManager.getSDKVersion();
+    _webServer.addListener(this);
+    var endCardName = await _webServer.getEndCardName();
+    if(endCardName != null) {
+      _sdkManager.loadAd();
+    }
+    var serverURL = await _webServer.getWebServerURL();
+    //update UI
+    setState((){
+      _sdkVersion = sdkVersion;
+      if(endCardName != null) {
+        _endCardName = endCardName;
+      }
+      if(serverURL != null) {
+        _serverURL = serverURL;
+      }
+    });
+  }
+
+
+  @override
+  void onAdLoaded() {
+    setState(() {
+      _playBtnEnabled = true;
+    });
+  }
+
+  @override
+  void onAdDidPlay() {
+    _playingAd = true;
+  }
+
+  @override
+  void onAdDidClose() {
+    _playingAd = false;
+    setState(() {
+      _playBtnEnabled = false;
+    });
+
+    new Timer(Duration(seconds: 1), () {
+      _sdkManager.loadAd();
+    });
+  }
+
+  @override
+  onEndCardUploaded(String zipName) {
+    if (!_playingAd) {
+
+      new Timer(Duration(microseconds: 100), () {
+        _sdkManager.loadAd();
+      });
+
+      setState(() {
+        _endCardName = zipName;
+        _playBtnEnabled = false;
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    init();
+  }
+
+
+  @override
+  void dispose() {
+    super.dispose();
+    _webServer.removeListener(this);
+    _sdkManager.removeDelegate(this);
   }
 
   @override
@@ -35,9 +119,9 @@ class HomeViewState extends State<HomeView> {
     if(_endCardName != null) {
       children.addAll([
         Expanded(
-            child: BundleIconBox(true)
+            child: BundleIconBox(_playBtnEnabled)
         ),
-        BundleNameBox(),
+        BundleNameBox(_endCardName, _playBtnEnabled),
         SizedBox(height: 5,),
         BottomButtonBox(_playBtnEnabled, _onPlayAd),
       ]);
@@ -57,6 +141,7 @@ class HomeViewState extends State<HomeView> {
       ),
     );
   }
+
 }
 
 class GuidanceBox extends StatelessWidget {
@@ -99,9 +184,12 @@ class BrowserBox extends StatelessWidget {
   final String _serverURL;
   BrowserBox(this._serverURL);
 
-
   @override
   Widget build(BuildContext context) {
+    var url = StringUtils.safe(_serverURL);
+    if(url.endsWith("/")) {
+      url = url.substring(0, url.length-1);
+    }
     return Container(
       height: 100,
       margin: EdgeInsets.only(left: 20, right: 20),
@@ -119,7 +207,8 @@ class BrowserBox extends StatelessWidget {
             child: Container(
               margin: EdgeInsets.only(left:50, top: 50, right: 20),
               //color: Colors.yellow,
-              child: Text(_serverURL,
+              child: Text(
+                url,
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
                 textAlign: TextAlign.center,
               ),
@@ -158,7 +247,7 @@ class SDKVersionBox extends StatelessWidget {
               color: Colors.white,
               textColor: Colors.blue,
               onPressed: _onPressed,
-              child: Text(_sdkVersion),
+              child: Text(StringUtils.safe(_sdkVersion)),
               shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(4.0), )
           )
         ],
@@ -168,28 +257,35 @@ class SDKVersionBox extends StatelessWidget {
 }
 
 class BundleIconBox extends StatelessWidget {
-  final bool disabled;
-  BundleIconBox(this.disabled);
+  final bool enabled;
+  BundleIconBox(this.enabled);
 
   @override
   Widget build(BuildContext context) {
     final src = 'assets/Vungle-phone-bundle-icon.png';
     return Container(
       padding: EdgeInsets.symmetric(vertical: 5),
-      child: disabled ? Image.asset(src,
+      child: enabled ? Image.asset(src) : Image.asset(src,
         color: Color.fromRGBO(255, 255, 255, 0.5),
-        colorBlendMode: BlendMode.modulate,) : Image.asset(src),
+        colorBlendMode: BlendMode.modulate,)
     );
   }
 }
 
 class BundleNameBox extends StatelessWidget {
+  final bool enabled;
+  final String _endCardName;
+  BundleNameBox(this._endCardName, this.enabled);
 
   @override
   Widget build(BuildContext context) {
     return Text(
-        'Bundle.zip',
-        style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600)
+        StringUtils.safe(_endCardName),
+        textAlign: TextAlign.center,
+        style: TextStyle(
+            fontSize: 18, fontWeight: FontWeight.w600,
+            color: enabled ? Colors.black87 : Color.fromRGBO(0, 0, 0, 0.5),
+        )
     );
   }
 }

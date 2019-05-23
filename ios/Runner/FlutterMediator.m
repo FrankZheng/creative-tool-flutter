@@ -15,6 +15,7 @@
 #define kWebServerChan @"com.vungle.vcltool/webserver"
 #define kEndcardName @"endCardName"
 #define kServerURL @"serverURL"
+#define kLocalhostURL @"localhostURL"
 
 //Web Server callbacks channel and method names
 #define kWebServerCallbackChan @"com.vungle.vcltool/webserverCallbacks"
@@ -83,7 +84,10 @@
 - (void)handleWebServerMethods:(FlutterMethodCall *)call result:(FlutterResult)result {
     if([kServerURL isEqualToString:call.method]) {
         NSURL *url = _webServer.serverURL;
-        result( url != nil ? url.absoluteString : @"");
+        result(url.absoluteString);
+    } else if([kLocalhostURL isEqualToString:call.method]) {
+        NSURL *url = _webServer.localhostURL;
+        result(url.absoluteString);
     } else if([kEndcardName isEqualToString:call.method]) {
         NSArray<NSString*> *names = _resourceManager.uploadEndcardNames;
         if(names.count > 0) {

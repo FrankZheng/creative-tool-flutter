@@ -93,6 +93,7 @@
         NSMutableDictionary *ret = [NSMutableDictionary dictionary];
         ret[kReturnValue] = @(YES);
         _proxy.delegate = self;
+        _proxy.networkLoggingEnabled = YES;
         if(![_proxy startWithAppId:appId
                         placements:placements
                          serverURL:[NSURL URLWithString:serverURL]

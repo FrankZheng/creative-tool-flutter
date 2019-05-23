@@ -28,6 +28,7 @@
 @property(nonatomic, strong) NSString *defaultVideoName;
 @property(nonatomic, strong) ResourceManager *resourceManager;
 @property(nonatomic, strong) AppConfig *config;
+@property(nonatomic, strong) NSURL *localhostURL; //for sdk use
 
 @end
 
@@ -56,6 +57,8 @@
         
         //just use the first one for now
         _uploadedEndcardName = [_resourceManager.uploadEndcardNames firstObject];
+        NSString *localhost = [NSString stringWithFormat:@"http://127.0.0.1:%@", @(_portNumber)];
+        _localhostURL = [NSURL URLWithString:localhost];
     }
     return self;
     
@@ -135,25 +138,26 @@
     
 }
 
+//for external use
 - (NSURL *)serverURL {
     return self.webServer.serverURL;
 }
 
 - (NSString *)serverURLWithPath:(NSString*)path  {
-    return [[self.serverURL URLByAppendingPathComponent:path] absoluteString];
+    return [[self.localhostURL URLByAppendingPathComponent:path] absoluteString];
 }
 
 - (NSString *)staticURLWithPath:(NSString*)path {
     //TODO: here if static base path is "/static/
     //The final URL will be http://192.168.1.78//static/xxx
     //Which is a invalid url for sdk, so change it to "static/"
-    NSURL *staticBaseURL = [self.serverURL URLByAppendingPathComponent:_staticBasePath];
+    NSURL *staticBaseURL = [self.localhostURL URLByAppendingPathComponent:_staticBasePath];
     return [[staticBaseURL URLByAppendingPathComponent:path] absoluteString];
 }
 
 
 - (NSString *)uploadURLWithPath:(NSString*)path {
-    NSURL *uploadBaseURL = [self.serverURL URLByAppendingPathComponent:_uploadBasePath];
+    NSURL *uploadBaseURL = [self.localhostURL URLByAppendingPathComponent:_uploadBasePath];
     return [[uploadBaseURL URLByAppendingPathComponent:path] absoluteString];
 }
 

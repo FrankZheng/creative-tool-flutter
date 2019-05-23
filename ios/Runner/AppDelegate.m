@@ -17,6 +17,7 @@
     [[FlutterMediator sharedInstance] startWithFlutterViewController:controller];
     [[VungleSDKMediator sharedInstance] startWithFlutterViewController:controller];
     
+    
   return [super application:application didFinishLaunchingWithOptions:launchOptions];
 }
 

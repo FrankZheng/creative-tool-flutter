@@ -60,6 +60,11 @@
             [delegate appDidInitialize];
         }
     }
+    
+#if 1
+    config.verifyRequiredJsCalls = NO;
+    
+#endif
 }
 
 

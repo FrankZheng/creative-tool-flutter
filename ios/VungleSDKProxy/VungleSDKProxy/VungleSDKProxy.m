@@ -129,6 +129,7 @@ void onVungleAdPlayabilityUpdateWithoutError(id self, SEL _cmd, BOOL isAdPlayabl
     if([url characterAtIndex:url.length-1] == '/') {
         url = [url substringWithRange:NSMakeRange(0,url.length-1)];
     }
+    
     [_defaults setObject:url forKey:@"vungle.api_endpoint"];
     
     _sdk = [VungleSDK sharedSDK];

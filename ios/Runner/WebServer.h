@@ -17,7 +17,8 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 @interface WebServer : NSObject
-@property(nonatomic, readonly, nullable) NSURL* serverURL;
+@property(nonatomic, readonly, nullable) NSURL* serverURL; //this for external use, like upload creatives
+@property(nonatomic, readonly) NSURL* localhostURL; //this is for internal use, like mock server for SDK
 @property(nonatomic, assign) NSInteger portNumber;
 @property(nonatomic, copy) NSString *webStaticFolderPath;
 @property(nonatomic, copy) NSString *webUploadFolderPath;
