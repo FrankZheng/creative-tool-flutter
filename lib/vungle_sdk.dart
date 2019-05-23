@@ -112,12 +112,12 @@ class VungleSDK {
   }
 
   Future<List<String>> getSDKVersionList() async {
-    List<dynamic> versions = await channel.invokeMethod(SDK_VERSION_LIST);
+    var versions = await channel.invokeMethod(SDK_VERSION_LIST);
     List<String> res = [];
     versions.forEach((v){
       res.add(v as String);
     });
-    return versions;
+    return res;
   }
 
   //handle callbacks

@@ -22,10 +22,56 @@ class HomeViewState extends State<HomeView> implements WebServerListener, SDKDel
   bool _playBtnEnabled = false;
   String _endCardName;
   bool _playingAd = false;
+  List<String> _sdkVersions = [];
 
   //for switch sdk version
   void _onSwitchSDKVersion() {
 
+    showCupertinoModalPopup(context: context, builder: (builderContext) {
+      return CupertinoActionSheet(
+        title: Text("Switch SDK Version"),
+        message: Text("Please select which version you want to use?"),
+        actions: _sdkVersions.map((v) {
+          return CupertinoActionSheetAction(
+            onPressed: () {
+              Navigator.pop(builderContext, v);
+            },
+            child: Text(v),
+            isDestructiveAction: true,
+          );
+        }).toList(),
+        cancelButton: CupertinoActionSheetAction(
+            onPressed: () {
+              Navigator.pop(builderContext, null);
+            }, child: Text('Cancel')),
+      );
+    }).then((ret) {
+      if (ret != null && ret != _sdkVersion) {
+        showCupertinoDialog(context: context, builder: (builderContext) {
+          return CupertinoAlertDialog(
+            title: Text('Confirm Switch SDK'),
+            content: Text('To switch SDK version, you need restart the app.'),
+            actions: <Widget>[
+              CupertinoDialogAction(child: Text('OK'), isDestructiveAction: true,
+                  onPressed:() {
+                    Navigator.pop(builderContext, ret);
+                  }),
+              CupertinoDialogAction(child: Text('Cancel'), isDefaultAction: true,
+                  onPressed:() {
+                    Navigator.pop(builderContext, null);
+                  }),
+            ],
+          );
+        }).then((ret) {
+          if(ret != null) {
+            setState(() {
+              _sdkVersion = ret;
+            });
+            _sdkManager.switchSDKVersion(_sdkVersion);
+          }
+        });
+      }
+    });
   }
 
   //for play ad
@@ -41,9 +87,10 @@ class HomeViewState extends State<HomeView> implements WebServerListener, SDKDel
     bool sdkStartOK = false;
     if(hasWIFI) {
       _sdkManager.addDelegate(this);
-      sdkStartOK = await _sdkManager.start(url, "5.3.2");
+      sdkStartOK = await _sdkManager.start(url);
     }
     var sdkVersion = await _sdkManager.getSDKVersion();
+    var sdkVersions = await _sdkManager.getSDKVersions();
     _webServer.addListener(this);
     var endCardName = await _webServer.getEndCardName();
     if(endCardName != null && hasWIFI && sdkStartOK) {
@@ -59,6 +106,7 @@ class HomeViewState extends State<HomeView> implements WebServerListener, SDKDel
       if(serverURL != null && hasWIFI) {
         _serverURL = serverURL;
       }
+      _sdkVersions = sdkVersions;
     });
 
     if(!hasWIFI) {

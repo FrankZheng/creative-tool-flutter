@@ -87,6 +87,9 @@
 
 - (BOOL)loadSDK:(NSString *)version error:(NSError **)error {
 #if 1
+    if(_sdkVersionDict[version] == nil) {
+        version = kDefaultSDKVersion;
+    }
     NSString *frameworkName = _sdkVersionDict[version];
     NSString *path = [_sdksFolderPath stringByAppendingPathComponent:frameworkName];
 #else
@@ -123,7 +126,7 @@
     NSString *appId = params[@"appId"];
     NSArray<NSString *> *placements = params[@"placements"];
     NSString *serverURL = params[@"serverURL"];
-    NSString *sdkVersion = params[@"sdkVersion"] == nil ? kDefaultSDKVersion : params[@"sdkVersion"];
+    NSString *sdkVersion = params[@"sdkVersion"];
     NSError *error = nil;
     if(![self loadSDK:sdkVersion error:&error]) {
         ret[kReturnValue] = @(NO);

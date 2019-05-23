@@ -1,9 +1,15 @@
 import 'dart:async';
 import 'log_model.dart';
 import 'vungle_sdk.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 const APP_ID = 'CreativeTool';
 const PID = 'LOCAL01';
+
+//keys for preferences
+const PREFS_SDK_VERSION = "ActiveSDKVerison";
+const PREFS_IS_CORS_ENABLED = "IsCORsEnabled";
+const PREFS_VERIFY_REQUIRED_JS_CALLS = "VerifyRequiredJsCalls";
 
 abstract class SDKDelegate {
   void onAdLoaded();
@@ -42,8 +48,10 @@ class SDKManager implements VungleSDKListener {
     _delegates.remove(delegate);
   }
 
-  Future<bool> start(String serverURL, String sdkVersion) async {
-    return _sdk.start(APP_ID, [PID], serverURL, sdkVersion);
+  Future<bool> start(String serverURL) async {
+    var prefs = await this.prefs();
+    var sdkVersion = prefs.getString(PREFS_SDK_VERSION) ?? '';
+    return await _sdk.start(APP_ID, [PID], serverURL, sdkVersion);
   }
 
   void loadAd() {
@@ -103,6 +111,22 @@ class SDKManager implements VungleSDKListener {
   bool isInitialized() {
     return _sdk.isInitialized;
   }
+
+  void switchSDKVersion(String version) async {
+    var prefs = await this.prefs();
+    await prefs.setString(PREFS_SDK_VERSION, version);
+
+    //close app
+  }
+
+  Future<SharedPreferences> prefs() async {
+    return await SharedPreferences.getInstance();
+  }
+
+  Future<List<String>> getSDKVersions() async {
+    return _sdk.getSDKVersionList();
+  }
+
 
   @override
   void onSDKInitialized(VungleException e) {
