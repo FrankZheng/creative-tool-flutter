@@ -42,8 +42,8 @@ class SDKManager implements VungleSDKListener {
     _delegates.remove(delegate);
   }
 
-  void start(String serverURL) {
-    _sdk.start(APP_ID, [PID], serverURL);
+  Future<bool> start(String serverURL, String sdkVersion) async {
+    return _sdk.start(APP_ID, [PID], serverURL, sdkVersion);
   }
 
   void loadAd() {
@@ -98,6 +98,10 @@ class SDKManager implements VungleSDKListener {
 
   Future<String> getSDKVersion() async {
     return _sdk.getSDKVersion();
+  }
+
+  bool isInitialized() {
+    return _sdk.isInitialized;
   }
 
   @override

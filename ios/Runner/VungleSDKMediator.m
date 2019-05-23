@@ -7,7 +7,8 @@
 //
 
 #import "VungleSDKMediator.h"
-@import VungleSDKProxy;
+//@import VungleSDKProxy;
+#import "VungleSDKProxyProtocol.h"
 
 
 //SDK channel and method names
@@ -20,6 +21,7 @@
 #define kForceCloseAd @"forceCloseAd"
 #define kClearCache @"clearCache"
 #define kIsCached @"isCached"
+#define kSDKVersionList @"sdkVersionList"
 
 //SDK callbacks channel and method names
 #define kSDKCallbackChan @"com.vungle.vcltool/vungleSDKCallbacks"
@@ -39,12 +41,14 @@
 //TODO: add utility for NSError -> dictionary
 //TODO: add utility for encode placement id to dictionary
 
+#define kDefaultSDKVersion @"6.3.2"
 
 @interface VungleSDKMediator() <VungleSDKProxyDelegate>
-@property(nonnull, strong) FlutterViewController *controller;
-@property(nonnull, strong) FlutterMethodChannel *sdkChan;
-@property(nonnull, strong) FlutterMethodChannel *sdkCallbackChan;
-@property(nonnull, strong) VungleSDKProxy *proxy;
+@property(nonatomic, strong) FlutterViewController *controller;
+@property(nonatomic, strong) FlutterMethodChannel *sdkChan;
+@property(nonatomic, strong) FlutterMethodChannel *sdkCallbackChan;
+@property(nonatomic, strong) id<VungleSDKProxy> proxy;
+@property(nonatomic, strong) NSDictionary *sdkVersionDict;
 @end
 
 @implementation VungleSDKMediator
@@ -63,7 +67,10 @@
 -(instancetype)init {
     self = [super init];
     if (self) {
-        _proxy = [VungleSDKProxy sharedProxy];
+        //_proxy = [VungleSDKProxy sharedProxy];
+        _sdkVersionDict = @{ @"6.3.2" : @"VungleSDKProxy_Vungle632.framework",
+                             @"5.3.2" : @"VungleSDKProxy_Vungle532.framework"
+                             };
     }
     return self;
 }
@@ -78,33 +85,82 @@
     _sdkCallbackChan = [FlutterMethodChannel methodChannelWithName:kSDKCallbackChan binaryMessenger:_controller];
 }
 
+- (BOOL)loadSDK:(NSString *)version error:(NSError **)error {
+#if 1
+    NSString *frameworkName = _sdkVersionDict[version];
+    NSString *path = [_sdksFolderPath stringByAppendingPathComponent:frameworkName];
+#else
+    NSString *frameworkName = @"VungleSDKProxy.framework";
+    NSString *path = [[[NSBundle mainBundle] privateFrameworksPath] stringByAppendingPathComponent:frameworkName];
+#endif
+    
+    NSBundle *bundle = [NSBundle bundleWithPath:path];
+    if(!bundle) {
+        NSString *description = [NSString stringWithFormat:@"%@ not found", path];
+        NSLog(@"%@", description);
+        *error = [NSError errorWithDomain:@"VungleCreativeTool"
+                                     code:1001 userInfo:@{NSLocalizedDescriptionKey: description}];
+        return NO;
+    }
+    
+    if(![bundle loadAndReturnError:error]) {
+        NSLog(@"Load %@ failed: %@", frameworkName, *error);
+        return NO;
+    } else {
+        NSLog(@"Load %@ success", frameworkName);
+    }
+    
+    Class clazz = NSClassFromString(@"VungleSDKProxyImpl");
+    _proxy = [clazz sharedProxy];
+    
+    return YES;
+
+}
+
+- (NSDictionary*)startSDK:(NSDictionary *)params {
+    //load sdk by it's version
+    NSMutableDictionary *ret = [NSMutableDictionary dictionary];
+    NSString *appId = params[@"appId"];
+    NSArray<NSString *> *placements = params[@"placements"];
+    NSString *serverURL = params[@"serverURL"];
+    NSString *sdkVersion = params[@"sdkVersion"] == nil ? kDefaultSDKVersion : params[@"sdkVersion"];
+    NSError *error = nil;
+    if(![self loadSDK:sdkVersion error:&error]) {
+        ret[kReturnValue] = @(NO);
+        if(error != nil) {
+            ret[kErrCode] = @(error.code);
+            ret[kErrMsg] = error.localizedDescription;
+        }
+        return ret;
+    }
+    
+    ret[kReturnValue] = @(YES);
+    _proxy.delegate = self;
+    _proxy.networkLoggingEnabled = YES;
+    if(![_proxy startWithAppId:appId
+                    placements:placements
+                     serverURL:[NSURL URLWithString:serverURL]
+                         error:&error]) {
+        ret[kReturnValue] = @(NO);
+        if(error != nil) {
+            ret[kErrCode] = @(error.code);
+            ret[kErrMsg] = error.localizedDescription;
+        }
+    }
+    return [ret copy];
+}
+
 - (void)handleSDKMethods:(FlutterMethodCall *)call result:(FlutterResult)result {
     NSLog(@"handleSDKMethods, method: %@, args: %@", call.method, call.arguments);
     if([kSDKVerson isEqualToString:call.method]) {
         //sdk version
         result(_proxy.version);
+    } else if([kSDKVersionList isEqualToString:call.method]) {
+        //available sdk version list
+        result([_sdkVersionDict allKeys]);
     } else if([kStartApp isEqualToString:call.method]) {
         //start sdk
-        NSDictionary *params = call.arguments;
-        NSString *appId = params[@"appId"];
-        NSArray<NSString *> *placements = params[@"placements"];
-        NSString *serverURL = params[@"serverURL"];
-        NSError *error = nil;
-        NSMutableDictionary *ret = [NSMutableDictionary dictionary];
-        ret[kReturnValue] = @(YES);
-        _proxy.delegate = self;
-        _proxy.networkLoggingEnabled = YES;
-        if(![_proxy startWithAppId:appId
-                        placements:placements
-                         serverURL:[NSURL URLWithString:serverURL]
-                             error:&error]) {
-            ret[kReturnValue] = @(NO);
-            if(error != nil) {
-                ret[kErrCode] = @(error.code);
-                ret[kErrMsg] = error.localizedDescription;
-            }
-        }
-        result(ret);
+        result([self startSDK:call.arguments]);
     } else if([kIsCached isEqualToString:call.method]) {
         //check if placeement is cached
         NSString *placementId = call.arguments;

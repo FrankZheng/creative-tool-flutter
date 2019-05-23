@@ -2,22 +2,36 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e6e765f3-4daf-47d0-8c3f-0d359f19185b" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/lib/utils.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ios/VungleSDKProxy/VungleSDKProxy/VungleSDKProxyProtocol.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.flutter-plugins" beforeDir="false" afterPath="$PROJECT_DIR$/.flutter-plugins" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.packages" beforeDir="false" afterPath="$PROJECT_DIR$/.packages" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/app/src/main/java/io/flutter/plugins/GeneratedPluginRegistrant.java" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/src/main/java/io/flutter/plugins/GeneratedPluginRegistrant.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ios/Flutter/App.framework/App" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Flutter/App.framework/App" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Flutter/App.framework/flutter_assets/LICENSE" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Flutter/App.framework/flutter_assets/LICENSE" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ios/Flutter/App.framework/flutter_assets/kernel_blob.bin" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Flutter/App.framework/flutter_assets/kernel_blob.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Podfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Podfile.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ios/Runner.xcodeproj/project.pbxproj" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner.xcodeproj/project.pbxproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/Runner/AppDelegate.m" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/AppDelegate.m" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ios/Runner/AppInitializer.m" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/AppInitializer.m" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/Runner/FlutterMediator.m" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/FlutterMediator.m" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/Runner/Info.plist" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/Info.plist" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Runner/GeneratedPluginRegistrant.m" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/GeneratedPluginRegistrant.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Runner/ResourceManager.m" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/ResourceManager.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Runner/VungleSDKMediator.h" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/VungleSDKMediator.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ios/Runner/VungleSDKMediator.m" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/VungleSDKMediator.m" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/Runner/WebServer.h" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/WebServer.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/Runner/WebServer.m" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/WebServer.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/VungleSDKProxy/VungleSDK/LICENSE.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/VungleSDKProxy/VungleSDK/README.md" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/ios/VungleSDKProxy/VungleSDKProxy.xcodeproj/project.pbxproj" beforeDir="false" afterPath="$PROJECT_DIR$/ios/VungleSDKProxy/VungleSDKProxy.xcodeproj/project.pbxproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/VungleSDKProxy/VungleSDKProxy/VunglePostRollWebViewHooks.m" beforeDir="false" afterPath="$PROJECT_DIR$/ios/VungleSDKProxy/VungleSDKProxy/VunglePostRollWebViewHooks.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/VungleSDKProxy/VungleSDKProxy/VungleSDKProxy.h" beforeDir="false" afterPath="$PROJECT_DIR$/ios/VungleSDKProxy/VungleSDKProxy/VungleSDKProxy.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ios/VungleSDKProxy/VungleSDKProxy/VungleSDKProxy.m" beforeDir="false" afterPath="$PROJECT_DIR$/ios/VungleSDKProxy/VungleSDKProxy/VungleSDKProxy.m" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/home_view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/home_view.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/main.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/sdk_manager.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/sdk_manager.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/vungle_sdk.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/vungle_sdk.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vungle_creative_tool.iml" beforeDir="false" afterPath="$PROJECT_DIR$/vungle_creative_tool.iml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.dart_tool/" />
     <ignored path="$PROJECT_DIR$/.idea/" />
@@ -31,11 +45,41 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/lib/main.dart">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="227">
-              <caret line="38" column="12" lean-forward="true" selection-start-line="38" selection-start-column="12" selection-end-line="38" selection-end-column="12" />
+            <state relative-caret-position="40">
+              <caret line="2" selection-start-line="2" selection-end-line="2" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lib/log_model.dart">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="220">
+              <caret line="15" column="10" selection-start-line="15" selection-start-column="10" selection-end-line="15" selection-end-column="10" />
+              <folding>
+                <element signature="e#0#20#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$USER_HOME$/flutter-home/flutter/.pub-cache/hosted/pub.dartlang.org/connectivity-0.4.3+1/lib/connectivity.dart">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1200">
+              <caret line="65" column="2" selection-start-line="65" selection-start-column="2" selection-end-line="65" selection-end-column="2" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lib/home_view.dart">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="153">
+              <caret line="33" column="3" selection-start-line="33" selection-start-column="3" selection-end-line="33" selection-end-column="3" />
               <folding>
                 <element signature="e#0#39#0" expanded="true" />
               </folding>
@@ -43,14 +87,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/lib/home_view.dart">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/pubspec.yaml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="859">
-              <caret line="314" column="8" lean-forward="true" selection-start-line="314" selection-start-column="8" selection-end-line="314" selection-end-column="8" />
-              <folding>
-                <element signature="e#0#39#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="580">
+              <caret line="29" column="24" selection-start-line="29" selection-start-column="24" selection-end-line="29" selection-end-column="24" />
             </state>
           </provider>
         </entry>
@@ -58,7 +99,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$USER_HOME$/flutter-home/flutter/packages/flutter/lib/src/material/colors.dart">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="146">
+            <state relative-caret-position="4400">
               <caret line="224" column="21" selection-start-line="224" selection-start-column="21" selection-end-line="224" selection-end-column="21" />
             </state>
           </provider>
@@ -74,22 +115,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/lib/ui_defines.dart">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="100">
-              <caret line="5" column="45" selection-start-line="5" selection-start-column="45" selection-end-line="5" selection-end-column="45" />
-              <folding>
-                <element signature="e#0#39#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/vungle_sdk.dart">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="157">
-              <caret line="35" column="7" selection-start-line="35" selection-start-column="7" selection-end-line="35" selection-end-column="7" />
+            <state relative-caret-position="451">
+              <caret line="68" selection-start-line="68" selection-end-line="68" />
             </state>
           </provider>
         </entry>
@@ -97,8 +126,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/sdk_manager.dart">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="603">
-              <caret line="126" column="12" selection-start-line="126" selection-start-column="12" selection-end-line="126" selection-end-column="12" />
+            <state relative-caret-position="349">
+              <caret line="102" column="20" selection-start-line="102" selection-start-column="7" selection-end-line="102" selection-end-column="20" />
               <folding>
                 <element signature="e#0#20#0" expanded="true" />
               </folding>
@@ -109,32 +138,11 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/web_server.dart">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="333">
+            <state relative-caret-position="780">
               <caret line="40" column="60" selection-start-line="40" selection-start-column="60" selection-end-line="40" selection-end-column="60" />
               <folding>
                 <element signature="e#0#39#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/lib/log_model.dart">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="228">
-              <caret line="15" column="10" selection-start-line="15" selection-start-column="10" selection-end-line="15" selection-end-column="10" />
-              <folding>
-                <element signature="e#0#20#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$USER_HOME$/flutter-home/flutter/bin/cache/pkg/sky_engine/lib/core/string.dart">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="157">
-              <caret line="99" column="15" selection-start-line="99" selection-start-column="15" selection-end-line="99" selection-end-column="15" />
             </state>
           </provider>
         </entry>
@@ -160,12 +168,13 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/pubspec.yaml" />
         <option value="$PROJECT_DIR$/lib/common_ui.dart" />
         <option value="$PROJECT_DIR$/lib/ui_defines.dart" />
-        <option value="$PROJECT_DIR$/lib/sdk_manager.dart" />
         <option value="$PROJECT_DIR$/lib/utils.dart" />
         <option value="$PROJECT_DIR$/lib/web_server.dart" />
+        <option value="$PROJECT_DIR$/pubspec.yaml" />
+        <option value="$PROJECT_DIR$/lib/vungle_sdk.dart" />
+        <option value="$PROJECT_DIR$/lib/sdk_manager.dart" />
         <option value="$PROJECT_DIR$/lib/home_view.dart" />
         <option value="$PROJECT_DIR$/lib/main.dart" />
       </list>
@@ -182,6 +191,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
+      <pane id="AndroidView" />
       <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
@@ -204,8 +215,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
-      <pane id="AndroidView" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -244,44 +253,33 @@
     <frame x="0" y="23" width="1061" height="821" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Structure" side_tool="true" />
-      <window_info id="Favorites" side_tool="true" />
-      <window_info id="Build Variants" side_tool="true" />
-      <window_info id="Image Layers" />
-      <window_info id="Designer" />
-      <window_info id="Captures" side_tool="true" />
-      <window_info id="Resources Explorer" />
-      <window_info id="Capture Tool" />
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25809616" />
-      <window_info anchor="bottom" id="Dart Analysis" weight="0.32907802" />
-      <window_info anchor="bottom" id="Run" visible="true" weight="0.31687242" />
-      <window_info anchor="bottom" id="Logcat" />
-      <window_info anchor="bottom" id="TODO" />
-      <window_info anchor="bottom" id="Debug" weight="0.32921812" />
-      <window_info anchor="bottom" id="Terminal" />
-      <window_info anchor="bottom" id="Event Log" side_tool="true" />
-      <window_info anchor="bottom" id="Flutter Performance" side_tool="true" />
-      <window_info anchor="bottom" id="Version Control" />
-      <window_info anchor="bottom" id="Messages" weight="0.19858156" />
-      <window_info anchor="bottom" id="Android Profiler" show_stripe_button="false" />
-      <window_info anchor="right" id="Device File Explorer" side_tool="true" />
-      <window_info anchor="right" id="Capture Analysis" />
-      <window_info anchor="right" id="Theme Preview" />
-      <window_info anchor="right" id="Flutter Inspector" />
-      <window_info anchor="right" id="Flutter Outline" />
-      <window_info anchor="right" id="Palette&#9;" />
+      <window_info id="Captures" order="1" side_tool="true" />
+      <window_info id="Structure" order="2" side_tool="true" />
+      <window_info id="Image Layers" order="3" />
+      <window_info id="Designer" order="4" />
+      <window_info id="Build Variants" order="5" side_tool="true" />
+      <window_info id="Resources Explorer" order="6" />
+      <window_info id="Capture Tool" order="7" />
+      <window_info id="Favorites" order="8" side_tool="true" />
+      <window_info anchor="bottom" id="Dart Analysis" order="0" weight="0.32907802" />
+      <window_info anchor="bottom" id="Run" order="1" visible="true" weight="0.31687242" />
+      <window_info anchor="bottom" id="TODO" order="2" />
+      <window_info anchor="bottom" id="Android Profiler" order="3" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Logcat" order="4" />
+      <window_info anchor="bottom" id="Debug" order="5" weight="0.32921812" />
+      <window_info anchor="bottom" id="Terminal" order="6" />
+      <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
+      <window_info anchor="bottom" id="Flutter Performance" order="8" side_tool="true" />
+      <window_info anchor="bottom" id="Version Control" order="9" />
+      <window_info anchor="bottom" id="Messages" order="10" weight="0.19753087" />
+      <window_info anchor="right" id="Device File Explorer" order="0" side_tool="true" />
+      <window_info anchor="right" id="Capture Analysis" order="1" />
+      <window_info anchor="right" id="Theme Preview" order="2" />
+      <window_info anchor="right" id="Flutter Inspector" order="3" />
+      <window_info anchor="right" id="Flutter Outline" order="4" />
+      <window_info anchor="right" id="Palette&#9;" order="5" />
     </layout>
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="Dart">
-          <url>file://$PROJECT_DIR$/lib/home_view.dart</url>
-          <line>35</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/android/app/src/profile/AndroidManifest.xml">
@@ -291,13 +289,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-9">
           <caret line="115" column="20" selection-start-line="115" selection-start-column="20" selection-end-line="115" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pubspec.yaml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-16">
-          <caret line="57" column="21" selection-start-line="57" selection-start-column="21" selection-end-line="57" selection-end-column="21" />
         </state>
       </provider>
     </entry>
@@ -325,16 +316,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/log_model.dart">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="228">
-          <caret line="15" column="10" selection-start-line="15" selection-start-column="10" selection-end-line="15" selection-end-column="10" />
-          <folding>
-            <element signature="e#0#20#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/flutter-home/flutter/bin/cache/pkg/sky_engine/lib/core/string.dart">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="157">
@@ -342,26 +323,33 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/vungle_sdk.dart">
+    <entry file="file://$PROJECT_DIR$/lib/log_model.dart">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="157">
-          <caret line="35" column="7" selection-start-line="35" selection-start-column="7" selection-end-line="35" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/sdk_manager.dart">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="603">
-          <caret line="126" column="12" selection-start-line="126" selection-start-column="12" selection-end-line="126" selection-end-column="12" />
+        <state relative-caret-position="220">
+          <caret line="15" column="10" selection-start-line="15" selection-start-column="10" selection-end-line="15" selection-end-column="10" />
           <folding>
             <element signature="e#0#20#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$USER_HOME$/flutter-home/flutter/.pub-cache/hosted/pub.dartlang.org/connectivity-0.4.3+1/lib/connectivity.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1200">
+          <caret line="65" column="2" selection-start-line="65" selection-start-column="2" selection-end-line="65" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pubspec.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="580">
+          <caret line="29" column="24" selection-start-line="29" selection-start-column="24" selection-end-line="29" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$USER_HOME$/flutter-home/flutter/packages/flutter/lib/src/material/colors.dart">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="146">
+        <state relative-caret-position="4400">
           <caret line="224" column="21" selection-start-line="224" selection-start-column="21" selection-end-line="224" selection-end-column="21" />
         </state>
       </provider>
@@ -375,8 +363,35 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/web_server.dart">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="333">
+        <state relative-caret-position="780">
           <caret line="40" column="60" selection-start-line="40" selection-start-column="60" selection-end-line="40" selection-end-column="60" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/vungle_sdk.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="451">
+          <caret line="68" selection-start-line="68" selection-end-line="68" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/sdk_manager.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="349">
+          <caret line="102" column="20" selection-start-line="102" selection-start-column="7" selection-end-line="102" selection-end-column="20" />
+          <folding>
+            <element signature="e#0#20#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/home_view.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="33" column="3" selection-start-line="33" selection-start-column="3" selection-end-line="33" selection-end-column="3" />
           <folding>
             <element signature="e#0#39#0" expanded="true" />
           </folding>
@@ -385,21 +400,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/main.dart">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="227">
-          <caret line="38" column="12" lean-forward="true" selection-start-line="38" selection-start-column="12" selection-end-line="38" selection-end-column="12" />
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/home_view.dart">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="859">
-          <caret line="314" column="8" lean-forward="true" selection-start-line="314" selection-start-column="8" selection-end-line="314" selection-end-column="8" />
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="40">
+          <caret line="2" selection-start-line="2" selection-end-line="2" />
         </state>
       </provider>
     </entry>

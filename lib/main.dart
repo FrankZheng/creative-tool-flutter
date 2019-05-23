@@ -2,16 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'home_view.dart';
 import 'ui_defines.dart';
-import 'web_server.dart';
-import 'sdk_manager.dart';
 
 void main() {
-  //initialize sdk
-  WebServer.shared.getLocalhostURL().then((url) {
-    if(url != null) {
-      SDKManager.shared.start(url);
-    }
-  });
   var app = MyApp();
   runApp(app);
 }

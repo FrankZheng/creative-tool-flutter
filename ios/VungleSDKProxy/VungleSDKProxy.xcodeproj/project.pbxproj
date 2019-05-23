@@ -18,6 +18,7 @@
 		FCDD960F22953FD300718B01 /* ObjcUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = FCDD960922953FD300718B01 /* ObjcUtils.m */; };
 		FCDD961022953FD300718B01 /* ForceCloseAdDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = FCDD960A22953FD300718B01 /* ForceCloseAdDelegate.h */; };
 		FCDD96152295404900718B01 /* inject.js in Resources */ = {isa = PBXBuildFile; fileRef = FCDD96142295404900718B01 /* inject.js */; };
+		FCDD964122967CF300718B01 /* VungleSDKProxyProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = FCDD964022967CF300718B01 /* VungleSDKProxyProtocol.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,6 +46,7 @@
 		FCDD960922953FD300718B01 /* ObjcUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ObjcUtils.m; sourceTree = "<group>"; };
 		FCDD960A22953FD300718B01 /* ForceCloseAdDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ForceCloseAdDelegate.h; sourceTree = "<group>"; };
 		FCDD96142295404900718B01 /* inject.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = inject.js; sourceTree = "<group>"; };
+		FCDD964022967CF300718B01 /* VungleSDKProxyProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VungleSDKProxyProtocol.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,6 +92,7 @@
 			isa = PBXGroup;
 			children = (
 				FCDD96132295402900718B01 /* js */,
+				FCDD964022967CF300718B01 /* VungleSDKProxyProtocol.h */,
 				FCDD95EB2295375E00718B01 /* VungleSDKProxy.h */,
 				FCDD960722953FD300718B01 /* VungleSDKProxy.m */,
 				FCDD960A22953FD300718B01 /* ForceCloseAdDelegate.h */,
@@ -134,6 +137,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FCDD964122967CF300718B01 /* VungleSDKProxyProtocol.h in Headers */,
 				FCDD95F92295375E00718B01 /* VungleSDKProxy.h in Headers */,
 				FCDD961022953FD300718B01 /* ForceCloseAdDelegate.h in Headers */,
 				FCDD960E22953FD300718B01 /* ObjcUtils.h in Headers */,

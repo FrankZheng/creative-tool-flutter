@@ -44,7 +44,7 @@
 - (NSArray *)getValidPlacementInfo;
 @end
 
-@interface VungleSDKProxy() <VungleSDKDelegate, VungleSDKLogger>
+@interface VungleSDKProxyImpl() <VungleSDKDelegate, VungleSDKLogger>
 @property(nonatomic, strong) VungleSDK *sdk;
 @property(nonatomic, strong) NSUserDefaults *defaults;
 @property(nonatomic, weak) id<ForceCloseAdDelegate> forceCloseAdDelegate;
@@ -71,10 +71,15 @@ void onVungleAdPlayabilityUpdateWithoutError(id self, SEL _cmd, BOOL isAdPlayabl
 }
 
 
-@implementation VungleSDKProxy
+@implementation VungleSDKProxyImpl
+@synthesize version = _version;
+@synthesize initialized = _initialized;
+@synthesize delegate = _delegate;
+@synthesize serverURL = _serverURL;
+@synthesize networkLoggingEnabled = _networkLoggingEnabled;
 
 +(instancetype)sharedProxy {
-    static VungleSDKProxy *instance = nil;
+    static VungleSDKProxyImpl *instance = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
 #pragma clang diagnostic push
@@ -84,7 +89,7 @@ void onVungleAdPlayabilityUpdateWithoutError(id self, SEL _cmd, BOOL isAdPlayabl
             //add implementation at runtime to class
             //BOOL is different on 32bit/64bit devices
             NSString *types = [NSString stringWithFormat:@"v@:%s@@", @encode(BOOL)];
-            class_addMethod([VungleSDKProxy class],
+            class_addMethod([VungleSDKProxyImpl class],
                             @selector(vungleAdPlayabilityUpdate:placementID:error:),
                             (IMP)onVungleAdPlayabilityUpdate,
                             [types UTF8String]);
@@ -92,13 +97,13 @@ void onVungleAdPlayabilityUpdateWithoutError(id self, SEL _cmd, BOOL isAdPlayabl
 #pragma GCC diagnostic pop
         else {
             NSString *types = [NSString stringWithFormat:@"v@:%s@", @encode(BOOL)];
-            class_addMethod([VungleSDKProxy class],
+            class_addMethod([VungleSDKProxyImpl class],
                             @selector(vungleAdPlayabilityUpdate:placementID:),
                             (IMP)onVungleAdPlayabilityUpdateWithoutError,
                             [types UTF8String]);
         }
         
-        instance = [[VungleSDKProxy alloc] init];
+        instance = [[VungleSDKProxyImpl alloc] init];
     });
     return instance;
 }

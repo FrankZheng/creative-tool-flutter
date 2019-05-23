@@ -12,6 +12,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface VungleSDKMediator : NSObject
+@property(nonatomic, copy) NSString *sdksFolderPath;
 
 +(instancetype)sharedInstance;
 

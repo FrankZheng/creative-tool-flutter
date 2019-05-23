@@ -41,7 +41,7 @@
     NSString *supportPath = [NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES) lastObject];
     NSString *webFolderPath = [supportPath stringByAppendingPathComponent:@"web"];
     //iOS does NOT allow load frameworks from documents or dirs, which could be used to do some hot patch
-    _sdksFolderPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"sdks"];
+    _sdksFolderPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"VungleSDKProxy"];
     NSLog(@"web folder path: %@", webFolderPath);
     
     _webStaticFolderPath = [webFolderPath stringByAppendingPathComponent:@"static"];

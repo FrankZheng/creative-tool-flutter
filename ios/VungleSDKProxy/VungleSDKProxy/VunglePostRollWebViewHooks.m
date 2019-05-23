@@ -12,7 +12,7 @@
 @import ObjectiveC;
 
 
-@interface VungleSDKProxy()
+@interface VungleSDKProxyImpl()
 @property(nonatomic, weak) id<ForceCloseAdDelegate> forceCloseAdDelegate;
 @property(nonatomic, assign) BOOL isCORsEnabled;
 
@@ -44,7 +44,7 @@
 
 - (void)new_load {
     id obj = [self valueForKey:@"webView"];
-    VungleSDKProxy *proxy = [VungleSDKProxy sharedProxy];
+    VungleSDKProxyImpl *proxy = [VungleSDKProxyImpl sharedProxy];
     if([obj isKindOfClass:[WKWebView class]]) {
         //NSLog(@"new_load");
         WKWebView *webView = (WKWebView *)obj;
@@ -77,13 +77,13 @@
             NSString *content = [message substringFromIndex:prefix.length];
             if([prefix isEqualToString:@"log:"]) {
                 //js log
-                [[VungleSDKProxy sharedProxy] onJSLog:content];
+                [[VungleSDKProxyImpl sharedProxy] onJSLog:content];
             } else if([prefix isEqualToString:@"trace:"]) {
                 //js trace
-                [[VungleSDKProxy sharedProxy] onJSTrace:content];
+                [[VungleSDKProxyImpl sharedProxy] onJSTrace:content];
             } else if([prefix isEqualToString:@"error:"]) {
                 //js error
-                [[VungleSDKProxy sharedProxy] onJSError:content];
+                [[VungleSDKProxyImpl sharedProxy] onJSError:content];
             }
             return YES;
         }

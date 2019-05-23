@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:connectivity/connectivity.dart';
 import 'dart:async';
 import 'web_server.dart';
 import 'sdk_manager.dart';
@@ -33,11 +34,19 @@ class HomeViewState extends State<HomeView> implements WebServerListener, SDKDel
   }
 
   void init() async {
-    _sdkManager.addDelegate(this);
+    var conn = await (Connectivity().checkConnectivity());
+    var url = await WebServer.shared.getLocalhostURL();
+    //user can upload creative only if has wifi
+    var hasWIFI = conn == ConnectivityResult.wifi;
+    bool sdkStartOK = false;
+    if(hasWIFI) {
+      _sdkManager.addDelegate(this);
+      sdkStartOK = await _sdkManager.start(url, "5.3.2");
+    }
     var sdkVersion = await _sdkManager.getSDKVersion();
     _webServer.addListener(this);
     var endCardName = await _webServer.getEndCardName();
-    if(endCardName != null) {
+    if(endCardName != null && hasWIFI && sdkStartOK) {
       _sdkManager.loadAd();
     }
     var serverURL = await _webServer.getWebServerURL();
@@ -47,8 +56,35 @@ class HomeViewState extends State<HomeView> implements WebServerListener, SDKDel
       if(endCardName != null) {
         _endCardName = endCardName;
       }
-      if(serverURL != null) {
+      if(serverURL != null && hasWIFI) {
         _serverURL = serverURL;
+      }
+    });
+
+    if(!hasWIFI) {
+      showAlertIfNoWIFI();
+    }
+  }
+
+  void showAlertIfNoWIFI() {
+    showCupertinoDialog<bool>(context: context, builder: (context) {
+      return CupertinoAlertDialog(
+        title: Text("No WIFI connected"),
+        content: Text("Please connect to the WIFI network and try again."),
+        actions: <Widget>[
+          CupertinoDialogAction(child: Text("Quit"), isDestructiveAction: true,
+            onPressed: () {
+              Navigator.pop(context, true);
+            },),
+          CupertinoDialogAction(child: Text("Continue"),
+              isDefaultAction: true, onPressed: () {
+                Navigator.pop(context, false);
+              }),
+        ],
+      );
+    }).then((ret) {
+      if(ret) {
+        //quit the app
       }
     });
   }
@@ -113,7 +149,6 @@ class HomeViewState extends State<HomeView> implements WebServerListener, SDKDel
       GuidanceBox(),
       BrowserBox(_serverURL),
       SDKVersionBox(_sdkVersion, _onSwitchSDKVersion),
-
     ];
 
     if(_endCardName != null) {

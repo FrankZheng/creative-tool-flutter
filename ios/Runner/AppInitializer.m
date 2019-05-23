@@ -10,6 +10,7 @@
 #import "WebServer.h"
 #import "ResourceManager.h"
 #import "AppConfig.h"
+#import "VungleSDKMediator.h"
 
 
 @interface AppInitializer()
@@ -52,6 +53,9 @@
     webServer.webStaticFolderPath = resourceManager.webStaticFolderPath;
     webServer.webUploadFolderPath = resourceManager.webUploadFolderPath;
     [webServer setup];
+    
+    //setup sdks folder
+    [VungleSDKMediator sharedInstance].sdksFolderPath = resourceManager.sdksFolderPath;
     
     _initialized = YES;
     for(NSValue *value in _delegates) {

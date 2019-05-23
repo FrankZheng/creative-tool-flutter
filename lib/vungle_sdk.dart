@@ -9,6 +9,7 @@ const PLAY_AD = 'playAd';
 const IS_CACHED = 'isCached';
 const CLEAR_CACHE = 'clearCache';
 const FORCE_CLOSE_AD = 'forceCloseAd';
+const SDK_VERSION_LIST = 'sdkVersionList';
 
 const SDK_INITIALIZED = 'sdkDidInitialized';
 const SDK_INITIALIZE_FAILED = 'sdkFailedToInitialize';
@@ -56,20 +57,23 @@ class VungleSDK {
   final callbackChannel = MethodChannel(SDK_CALLBACKS_CHANNEL_NAME);
 
   //start sdk
-  start(String appId, List<String> placements, String serverURL) async {
+  Future<bool> start(String appId, List<String> placements, String serverURL, String sdkVersion) async {
     //register callbacks
     callbackChannel.setMethodCallHandler(_onCallback);
     final Map<String, dynamic> params = {
       'appId': appId,
       'placements': placements,
-      'serverURL': serverURL
+      'serverURL': serverURL,
+      'sdkVersion': sdkVersion,
     };
 
     final result = await channel.invokeMethod(START_APP, params);
     final error = _parseMethodResult(result);
     if (error != null) {
       listener.onSDKInitialized(error);
+      return false;
     }
+    return true;
   }
 
   //load ad
@@ -105,6 +109,15 @@ class VungleSDK {
 
   Future<String> getSDKVersion() async {
     return channel.invokeMethod(SDK_VERSION);
+  }
+
+  Future<List<String>> getSDKVersionList() async {
+    List<dynamic> versions = await channel.invokeMethod(SDK_VERSION_LIST);
+    List<String> res = [];
+    versions.forEach((v){
+      res.add(v as String);
+    });
+    return versions;
   }
 
   //handle callbacks
