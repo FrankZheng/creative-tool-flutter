@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'home_view.dart';
 import 'ui_defines.dart';
 import 'settings_view.dart';
+import 'log_view.dart';
 
 void main() {
   var app = MyApp();
@@ -58,7 +59,7 @@ class MyApp extends StatelessWidget {
               case 1:
                 return CupertinoTabView(builder: (context) {
                   return Center(
-                    child: Text('page 2'),
+                    child: LogView(),
                   );
                 });
               case 2:

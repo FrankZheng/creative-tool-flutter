@@ -52,6 +52,7 @@ class LogModel with ChangeNotifier implements SDKLogDelegate {
   clearLogs() {
     _logs = [];
     //delete all logs from the database
+    notifyListeners();
   }
 
   @override
