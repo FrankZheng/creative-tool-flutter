@@ -24,6 +24,7 @@ abstract class SDKLogDelegate {
 class SDKManager implements VungleSDKListener {
   static final shared = SDKManager();
   VungleSDK _sdk;
+  bool _isCORsEnabled;
 
   var _delegates = <SDKDelegate>[];
   SDKLogDelegate _logDelegate;
@@ -49,7 +50,7 @@ class SDKManager implements VungleSDKListener {
   }
 
   Future<bool> start(String serverURL) async {
-    var prefs = await this.prefs();
+    var prefs = await this._prefs();
     var sdkVersion = prefs.getString(PREFS_SDK_VERSION) ?? '';
     return await _sdk.start(APP_ID, [PID], serverURL, sdkVersion);
   }
@@ -91,13 +92,12 @@ class SDKManager implements VungleSDKListener {
     }
   }
 
-  void playAd() {
-    //TODO: not hard code isCORs
-    _sdk.playAd(PID, true).then((error) {
-      if(error != null) {
-        print('Failed to play ad for $PID, ${error.message}');
-      }
-    });
+  Future<bool> playAd() async {
+    var error = await _sdk.playAd(PID, await isCORsEnabled());
+    if (error != null) {
+      print('Failed to play $PID, ${error.message}');
+    }
+    return error == null;
   }
 
   void forceCloseAd() {
@@ -113,11 +113,11 @@ class SDKManager implements VungleSDKListener {
   }
 
   Future<bool> switchSDKVersion(String version) async {
-    var prefs = await this.prefs();
+    var prefs = await this._prefs();
     return await prefs.setString(PREFS_SDK_VERSION, version);
   }
 
-  Future<SharedPreferences> prefs() async {
+  Future<SharedPreferences> _prefs() async {
     return await SharedPreferences.getInstance();
   }
 
@@ -125,6 +125,20 @@ class SDKManager implements VungleSDKListener {
     return _sdk.getSDKVersionList();
   }
 
+  Future<bool> isCORsEnabled() async {
+    if(_isCORsEnabled != null) {
+      return _isCORsEnabled;
+    }
+    var pres = await _prefs();
+    _isCORsEnabled = pres.getBool(PREFS_IS_CORS_ENABLED) ?? false;
+    return _isCORsEnabled;
+  }
+
+  void enableCORs(bool enabled) async {
+    _isCORsEnabled = enabled;
+    var pres = await _prefs();
+    pres.setBool(PREFS_IS_CORS_ENABLED, enabled);
+  }
 
   @override
   void onSDKInitialized(VungleException e) {

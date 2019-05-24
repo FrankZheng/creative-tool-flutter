@@ -17,6 +17,7 @@
 #define kEndcardName @"endCardName"
 #define kServerURL @"serverURL"
 #define kLocalhostURL @"localhostURL"
+#define kEnableVerifyJsCalls @"enableVerifyRequiredJsCalls"
 
 //Web Server callbacks channel and method names
 #define kWebServerCallbackChan @"com.vungle.vcltool/webserverCallbacks"
@@ -106,6 +107,9 @@
         } else {
             result(nil);
         }
+    } else if([kEnableVerifyJsCalls isEqualToString:call.method]) {
+        NSNumber *enabled = call.arguments;
+        _webServer.verifyRequiredJsCalls = enabled.boolValue;
     } else {
         result(FlutterMethodNotImplemented);
     }

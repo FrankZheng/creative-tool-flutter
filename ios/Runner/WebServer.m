@@ -27,7 +27,6 @@
 @property(nonatomic, strong) NSString *defaultEndcardName;
 @property(nonatomic, strong) NSString *defaultVideoName;
 @property(nonatomic, strong) ResourceManager *resourceManager;
-@property(nonatomic, strong) AppConfig *config;
 @property(nonatomic, strong) NSURL *localhostURL; //for sdk use
 
 @end
@@ -53,7 +52,7 @@
         _defaultEndcardName = @"res/endcard.zip";
         _defaultVideoName = @"res/countdown_video.mp4";
         _resourceManager = [ResourceManager sharedInstance];
-        _config = [AppConfig sharedConfig];
+        _verifyRequiredJsCalls = YES;
         
         //just use the first one for now
         _uploadedEndcardName = [_resourceManager.uploadEndcardNames firstObject];
@@ -252,7 +251,7 @@
         return [self responseWithCode:1 msg:@"`index.html` NOT found!"];
     }
     
-    if([_config verifyRequiredJsCalls]) {
+    if(_verifyRequiredJsCalls) {
         if(!hasDownloadJs) {
             NSLog(@"The uploaded endcard doesn't have download function");
             return [self responseWithCode:1 msg:@"parent.postMessage('download','*') NOT found!"];

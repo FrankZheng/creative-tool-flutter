@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'home_view.dart';
 import 'ui_defines.dart';
+import 'settings_view.dart';
 
 void main() {
   var app = MyApp();
@@ -63,7 +64,7 @@ class MyApp extends StatelessWidget {
               case 2:
                 return CupertinoTabView(builder: (context) {
                   return Center(
-                    child: Text('page 3'),
+                    child: SettingsView()
                   );
                 });
             }

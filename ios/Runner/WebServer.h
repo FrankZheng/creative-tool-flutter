@@ -24,6 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, copy) NSString *webUploadFolderPath;
 @property(nonatomic, weak) NSObject<WebServerDelegate> *delegate;
 @property(nonatomic, readonly, getter=isStarted) BOOL started;
+@property(nonatomic, assign) BOOL verifyRequiredJsCalls;
 
 
 +(instancetype)sharedInstance;
