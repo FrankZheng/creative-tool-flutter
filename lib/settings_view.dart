@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'sdk_manager.dart';
 import 'web_server.dart';
+import 'app_model.dart';
 
 
 class SettingsView extends StatefulWidget {
@@ -15,9 +16,11 @@ class SettingsViewState extends State<SettingsView> {
   bool _verifyJsCalls;
   final _sdkManager = SDKManager.shared;
   final _webServer = WebServer.shared;
+  final _appModel = AppModel.shared;
 
   int _rightBarClicked = 0;
   bool _showVerifyJsCalls = false;
+  String _appVersion;
 
   void _onRightBarTap() {
     _rightBarClicked++;
@@ -42,25 +45,19 @@ class SettingsViewState extends State<SettingsView> {
     });
   }
 
+  void _init() async {
+    _inspectJs = await _sdkManager.isCORsEnabled();
+    _verifyJsCalls = await _webServer.verifyRequiredJsCalls();
+    _appVersion = await _appModel.appVersion();
+    setState(() {
+
+    });
+  }
+
   @override
   void initState() {
     super.initState();
-
-    _sdkManager.isCORsEnabled().then((enabled) {
-      if(enabled != _inspectJs) {
-        setState((){
-          _inspectJs = enabled;
-        });
-      }
-    });
-
-    _webServer.verifyRequiredJsCalls().then((enabled){
-      if(enabled != _verifyJsCalls) {
-        setState(() {
-          _verifyJsCalls = enabled;
-        });
-      }
-    });
+    _init();
   }
 
   @override
@@ -78,6 +75,14 @@ class SettingsViewState extends State<SettingsView> {
       ]);
     }
 
+    if (_appVersion != null) {
+      items.add(Spacer());
+      items.add(Text(
+        _appVersion,
+        style: TextStyle(color: Colors.blue, fontSize: 18))
+      );
+    }
+
     return CupertinoPageScaffold(
         navigationBar: CupertinoNavigationBar(
           middle: Text('Settings'),
@@ -88,17 +93,12 @@ class SettingsViewState extends State<SettingsView> {
           ),
         ),
         child: SafeArea(
+          bottom: false,
           child: Padding(
               padding: const EdgeInsets.only(
                   top: 5, bottom: 20, left: 12, right: 12),
               child: Column(
-                children: <Widget>[
-                  ...items,
-                  Spacer(),
-                  Text(
-                    '0.9.7_10',
-                    style: TextStyle(color: Colors.blue, fontSize: 18),)
-                ],
+                children: items,
               )
           ),
 

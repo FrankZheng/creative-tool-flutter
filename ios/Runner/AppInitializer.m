@@ -9,7 +9,6 @@
 #import "AppInitializer.h"
 #import "WebServer.h"
 #import "ResourceManager.h"
-#import "AppConfig.h"
 #import "VungleSDKMediator.h"
 
 
@@ -43,8 +42,6 @@
 }
 
 - (void)start {
-    AppConfig *config = [AppConfig sharedConfig];
-    [config setup];
     
     ResourceManager *resourceManager = [ResourceManager sharedInstance];
     [resourceManager setup];
@@ -64,11 +61,6 @@
             [delegate appDidInitialize];
         }
     }
-    
-#if 1
-    config.verifyRequiredJsCalls = NO;
-    
-#endif
 }
 
 

@@ -210,7 +210,7 @@ class HomeViewState extends State<HomeView> implements WebServerListener, SDKDel
             child: BundleIconBox(_playBtnEnabled)
         ),
         BundleNameBox(_endCardName, _playBtnEnabled),
-        SizedBox(height: 5,),
+        SizedBox(height: 10,),
         BottomButtonBox(_playBtnEnabled, _onPlayAd),
       ]);
     }
@@ -219,6 +219,7 @@ class HomeViewState extends State<HomeView> implements WebServerListener, SDKDel
         middle: Text('Vungle Creative QA'),
       ),
       child: SafeArea(
+        bottom: false,
         child: Padding(
           padding: const EdgeInsets.only(top: 8, bottom: 12, left: 1, right: 1),
           child: Column(

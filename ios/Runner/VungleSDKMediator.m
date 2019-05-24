@@ -275,7 +275,21 @@
 
 - (void)onJSError:(NSString *)jsError {
     [_sdkCallbackChan invokeMethod:kOnLog arguments:@{@"type":@"error", @"rawLog":jsError}];
+    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Confirm Close Ad"
+                                                    message:@"Some JS error happened, close ad?"
+                                                   delegate:self
+                                          cancelButtonTitle:@"NO"
+                                          otherButtonTitles:@"YES", nil];
+    [alert show];
 }
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if(buttonIndex == 1) {
+        [_proxy forceCloseAd];
+    }
+}
+
 
 - (void)onJSTrace:(NSString *)jsTrace {
     [_sdkCallbackChan invokeMethod:kOnLog arguments:@{@"type":@"trace", @"rawLog":jsTrace}];

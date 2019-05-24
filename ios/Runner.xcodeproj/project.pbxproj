@@ -33,7 +33,6 @@
 		FCDD963A229551BF00718B01 /* ResourceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FCDD9630229551BE00718B01 /* ResourceManager.m */; };
 		FCDD963B229551BF00718B01 /* VungleSDKMediator.m in Sources */ = {isa = PBXBuildFile; fileRef = FCDD9633229551BE00718B01 /* VungleSDKMediator.m */; };
 		FCDD963C229551BF00718B01 /* WebServer.m in Sources */ = {isa = PBXBuildFile; fileRef = FCDD9634229551BE00718B01 /* WebServer.m */; };
-		FCDD963D229551BF00718B01 /* AppConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = FCDD9636229551BE00718B01 /* AppConfig.m */; };
 		FCDD963E229551BF00718B01 /* AppInitializer.m in Sources */ = {isa = PBXBuildFile; fileRef = FCDD9637229551BE00718B01 /* AppInitializer.m */; };
 		FCDD963F229551BF00718B01 /* FlutterMediator.m in Sources */ = {isa = PBXBuildFile; fileRef = FCDD9638229551BE00718B01 /* FlutterMediator.m */; };
 		FCDD96442296865C00718B01 /* VungleSDKProxy in Resources */ = {isa = PBXBuildFile; fileRef = FCDD96432296865C00718B01 /* VungleSDKProxy */; };
@@ -92,10 +91,8 @@
 		FCDD9633229551BE00718B01 /* VungleSDKMediator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VungleSDKMediator.m; sourceTree = "<group>"; };
 		FCDD9634229551BE00718B01 /* WebServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebServer.m; sourceTree = "<group>"; };
 		FCDD9635229551BE00718B01 /* AppInitializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppInitializer.h; sourceTree = "<group>"; };
-		FCDD9636229551BE00718B01 /* AppConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppConfig.m; sourceTree = "<group>"; };
 		FCDD9637229551BE00718B01 /* AppInitializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppInitializer.m; sourceTree = "<group>"; };
 		FCDD9638229551BE00718B01 /* FlutterMediator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FlutterMediator.m; sourceTree = "<group>"; };
-		FCDD9639229551BF00718B01 /* AppConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppConfig.h; sourceTree = "<group>"; };
 		FCDD96422296801500718B01 /* VungleSDKProxyProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VungleSDKProxyProtocol.h; path = VungleSDKProxy/VungleSDKProxy/VungleSDKProxyProtocol.h; sourceTree = SOURCE_ROOT; };
 		FCDD96432296865C00718B01 /* VungleSDKProxy */ = {isa = PBXFileReference; lastKnownFileType = folder; path = VungleSDKProxy; sourceTree = "<group>"; };
 		FCDD96482297829800718B01 /* AppModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppModel.h; sourceTree = "<group>"; };
@@ -157,8 +154,6 @@
 			children = (
 				FCDD96432296865C00718B01 /* VungleSDKProxy */,
 				FCDD96252295512A00718B01 /* web */,
-				FCDD9639229551BF00718B01 /* AppConfig.h */,
-				FCDD9636229551BE00718B01 /* AppConfig.m */,
 				FCDD96482297829800718B01 /* AppModel.h */,
 				FCDD96492297829900718B01 /* AppModel.m */,
 				FCDD9635229551BE00718B01 /* AppInitializer.h */,
@@ -385,7 +380,6 @@
 			files = (
 				FCDD963E229551BF00718B01 /* AppInitializer.m in Sources */,
 				FCDD963B229551BF00718B01 /* VungleSDKMediator.m in Sources */,
-				FCDD963D229551BF00718B01 /* AppConfig.m in Sources */,
 				978B8F6F1D3862AE00F588F7 /* AppDelegate.m in Sources */,
 				97C146F31CF9000F007C117D /* main.m in Sources */,
 				1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */,
