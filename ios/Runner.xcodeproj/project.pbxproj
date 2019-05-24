@@ -37,6 +37,7 @@
 		FCDD963E229551BF00718B01 /* AppInitializer.m in Sources */ = {isa = PBXBuildFile; fileRef = FCDD9637229551BE00718B01 /* AppInitializer.m */; };
 		FCDD963F229551BF00718B01 /* FlutterMediator.m in Sources */ = {isa = PBXBuildFile; fileRef = FCDD9638229551BE00718B01 /* FlutterMediator.m */; };
 		FCDD96442296865C00718B01 /* VungleSDKProxy in Resources */ = {isa = PBXBuildFile; fileRef = FCDD96432296865C00718B01 /* VungleSDKProxy */; };
+		FCDD964A2297829900718B01 /* AppModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FCDD96492297829900718B01 /* AppModel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -97,6 +98,8 @@
 		FCDD9639229551BF00718B01 /* AppConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppConfig.h; sourceTree = "<group>"; };
 		FCDD96422296801500718B01 /* VungleSDKProxyProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VungleSDKProxyProtocol.h; path = VungleSDKProxy/VungleSDKProxy/VungleSDKProxyProtocol.h; sourceTree = SOURCE_ROOT; };
 		FCDD96432296865C00718B01 /* VungleSDKProxy */ = {isa = PBXFileReference; lastKnownFileType = folder; path = VungleSDKProxy; sourceTree = "<group>"; };
+		FCDD96482297829800718B01 /* AppModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppModel.h; sourceTree = "<group>"; };
+		FCDD96492297829900718B01 /* AppModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppModel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -156,6 +159,8 @@
 				FCDD96252295512A00718B01 /* web */,
 				FCDD9639229551BF00718B01 /* AppConfig.h */,
 				FCDD9636229551BE00718B01 /* AppConfig.m */,
+				FCDD96482297829800718B01 /* AppModel.h */,
+				FCDD96492297829900718B01 /* AppModel.m */,
 				FCDD9635229551BE00718B01 /* AppInitializer.h */,
 				FCDD9637229551BE00718B01 /* AppInitializer.m */,
 				FCDD962E229551BE00718B01 /* FlutterMediator.h */,
@@ -369,7 +374,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "/bin/sh \"$FLUTTER_ROOT/packages/flutter_tools/bin/xcode_backend.sh\" build";
+			shellScript = "/bin/sh \"$FLUTTER_ROOT/packages/flutter_tools/bin/xcode_backend.sh\" build\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -385,6 +390,7 @@
 				97C146F31CF9000F007C117D /* main.m in Sources */,
 				1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */,
 				FCDD963A229551BF00718B01 /* ResourceManager.m in Sources */,
+				FCDD964A2297829900718B01 /* AppModel.m in Sources */,
 				FCDD963F229551BF00718B01 /* FlutterMediator.m in Sources */,
 				FCDD963C229551BF00718B01 /* WebServer.m in Sources */,
 			);
@@ -482,6 +488,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.vungle.creative.VungleCreativeTool;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Profile;
@@ -610,6 +617,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.vungle.creative.VungleCreativeTool;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -636,6 +644,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.vungle.creative.VungleCreativeTool;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
+				VALID_ARCHS = "arm64 arm64e";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;

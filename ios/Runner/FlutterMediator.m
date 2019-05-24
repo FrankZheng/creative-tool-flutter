@@ -9,6 +9,7 @@
 #import "WebServer.h"
 #import "AppConfig.h"
 #import "ResourceManager.h"
+#import "AppModel.h"
 
 
 //Web Server channel and method names
@@ -21,6 +22,9 @@
 #define kWebServerCallbackChan @"com.vungle.vcltool/webserverCallbacks"
 #define kEndcardUploaded @"endcardUploaded"
 
+#define kAppChan @"com.vungle.vcltool/app"
+#define kCloseApp @"closeApp"
+
 //App Config channel and method names
 #define kAppConfigChan @"com.vungle.vcltool/appConfig"
 #define kCurrentSDKVersion @"currentSDKVersion"
@@ -32,14 +36,15 @@
 #define kSetVerifyJsCalls @"setVerifyJsCalls"
 
 @interface FlutterMediator() <WebServerDelegate, UIAlertViewDelegate>
-@property(nonnull, strong) FlutterViewController *controller;
-@property(nonnull, strong) FlutterMethodChannel *webServerChan;
-@property(nonnull, strong) FlutterMethodChannel *webServerCallbackChan;
-@property(nonnull, strong) FlutterMethodChannel *appConfigChan;
+@property(nonatomic, strong) FlutterViewController *controller;
+@property(nonatomic, strong) FlutterMethodChannel *webServerChan;
+@property(nonatomic, strong) FlutterMethodChannel *webServerCallbackChan;
+@property(nonatomic, strong) FlutterMethodChannel *appConfigChan;
+@property(nonatomic, strong) FlutterMethodChannel *appChan;
 
-@property(nonnull, strong) AppConfig* appConfig;
-@property(nonnull, strong) WebServer* webServer;
-@property(nonnull, strong) ResourceManager *resourceManager;
+@property(nonatomic, strong) AppConfig* appConfig;
+@property(nonatomic, strong) WebServer* webServer;
+@property(nonatomic, strong) ResourceManager *resourceManager;
 
 
 
@@ -79,6 +84,12 @@
     [_appConfigChan setMethodCallHandler:^(FlutterMethodCall * _Nonnull call, FlutterResult  _Nonnull result) {
         [weakSelf handleAppConfigMethods:call result:result];
     }];
+    
+    _appChan = [FlutterMethodChannel methodChannelWithName:kAppChan binaryMessenger:_controller];
+    [_appChan setMethodCallHandler:^(FlutterMethodCall * _Nonnull call, FlutterResult  _Nonnull result) {
+        [weakSelf handleAppMethods:call result:result];
+    }];
+    
 }
 
 - (void)handleWebServerMethods:(FlutterMethodCall *)call result:(FlutterResult)result {
@@ -99,6 +110,14 @@
         result(FlutterMethodNotImplemented);
     }
 }
+
+- (void)handleAppMethods:(FlutterMethodCall *)call result:(FlutterResult)result {
+    if([kCloseApp isEqualToString:call.method]) {
+        result(nil);
+        [AppModel closeApp];
+    }
+}
+
 
 - (void)handleAppConfigMethods:(FlutterMethodCall *)call result:(FlutterResult)result {
     if ([kCurrentSDKVersion isEqualToString:call.method]) {

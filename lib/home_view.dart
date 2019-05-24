@@ -4,6 +4,7 @@ import 'package:connectivity/connectivity.dart';
 import 'dart:async';
 import 'web_server.dart';
 import 'sdk_manager.dart';
+import 'app_model.dart';
 import 'utils.dart';
 
 class HomeView extends StatefulWidget {
@@ -16,6 +17,7 @@ class HomeView extends StatefulWidget {
 class HomeViewState extends State<HomeView> implements WebServerListener, SDKDelegate {
   final WebServer _webServer = WebServer.shared;
   final SDKManager _sdkManager = SDKManager.shared;
+  final AppModel _appModel = AppModel.shared;
 
   String _serverURL;
   String _sdkVersion;
@@ -26,7 +28,6 @@ class HomeViewState extends State<HomeView> implements WebServerListener, SDKDel
 
   //for switch sdk version
   void _onSwitchSDKVersion() {
-
     showCupertinoModalPopup(context: context, builder: (builderContext) {
       return CupertinoActionSheet(
         title: Text("Switch SDK Version"),
@@ -67,7 +68,11 @@ class HomeViewState extends State<HomeView> implements WebServerListener, SDKDel
             setState(() {
               _sdkVersion = ret;
             });
-            _sdkManager.switchSDKVersion(_sdkVersion);
+            //save the sdk version for next time use
+            _sdkManager.switchSDKVersion(_sdkVersion).then((_){
+              //close app
+              _appModel.closeApp();
+            });
           }
         });
       }
@@ -132,7 +137,7 @@ class HomeViewState extends State<HomeView> implements WebServerListener, SDKDel
       );
     }).then((ret) {
       if(ret) {
-        //quit the app
+        _appModel.closeApp();
       }
     });
   }

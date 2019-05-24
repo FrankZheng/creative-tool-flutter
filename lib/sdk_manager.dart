@@ -112,11 +112,9 @@ class SDKManager implements VungleSDKListener {
     return _sdk.isInitialized;
   }
 
-  void switchSDKVersion(String version) async {
+  Future<bool> switchSDKVersion(String version) async {
     var prefs = await this.prefs();
-    await prefs.setString(PREFS_SDK_VERSION, version);
-
-    //close app
+    return await prefs.setString(PREFS_SDK_VERSION, version);
   }
 
   Future<SharedPreferences> prefs() async {
