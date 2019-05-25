@@ -408,7 +408,6 @@ class BottomButtonBox extends StatelessWidget {
     if(_playBtnEnabled) {
       child = Row(
         mainAxisAlignment: MainAxisAlignment.center,
-        mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           Text('TEST', style: TextStyle(fontSize:18, fontWeight: FontWeight.w600),),
           SizedBox(width: 5,),
@@ -418,21 +417,24 @@ class BottomButtonBox extends StatelessWidget {
     } else {
       child = Row(
         mainAxisAlignment: MainAxisAlignment.center,
-        mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           Text('LOADING ...', style: TextStyle(fontSize:18, fontWeight: FontWeight.w600),),
         ],
       );
     }
-
     var button = RaisedButton(
-        padding: EdgeInsets.symmetric(horizontal: 100, vertical: 10),
         color: Colors.blue,
         textColor: Colors.white,
         onPressed: _playBtnEnabled ? _onPressed : _emptyOnPressed,
         child: child,
         shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0), )
     );
-    return !_playBtnEnabled ? Opacity(opacity: 0.5, child: button) : button;
+    
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 50),
+      padding: EdgeInsets.zero,
+      child: _playBtnEnabled ? button : Opacity(opacity: 0.5, child: button)
+    );
+    
   }
 }
