@@ -6,6 +6,7 @@ import 'web_server.dart';
 import 'sdk_manager.dart';
 import 'app_model.dart';
 import 'utils.dart';
+import 'package:flutter/services.dart';
 
 class HomeView extends StatefulWidget {
 
@@ -84,6 +85,15 @@ class HomeViewState extends State<HomeView> implements WebServerListener, SDKDel
     _sdkManager.playAd();
   }
 
+  void _setupOrientation(bool allowLandscape) {
+    var orient = [DeviceOrientation.portraitUp];
+    if(allowLandscape) {
+      orient.addAll([DeviceOrientation.landscapeLeft,
+        DeviceOrientation.landscapeRight]);
+    }
+    SystemChrome.setPreferredOrientations(orient);
+  }
+
   void init() async {
     var conn = await (Connectivity().checkConnectivity());
     var url = await WebServer.shared.getLocalhostURL();
@@ -153,18 +163,20 @@ class HomeViewState extends State<HomeView> implements WebServerListener, SDKDel
   @override
   void onAdDidPlay() {
     _playingAd = true;
+    setState(() {
+      _playBtnEnabled = false;
+    });
+
+    _setupOrientation(true);
   }
 
   @override
   void onAdDidClose() {
     _playingAd = false;
-    setState(() {
-      _playBtnEnabled = false;
-    });
-
     new Timer(Duration(seconds: 1), () {
       _sdkManager.loadAd();
     });
+    _setupOrientation(false);
   }
 
   @override
@@ -186,6 +198,7 @@ class HomeViewState extends State<HomeView> implements WebServerListener, SDKDel
   void initState() {
     super.initState();
     init();
+    _setupOrientation(false);
   }
 
 
