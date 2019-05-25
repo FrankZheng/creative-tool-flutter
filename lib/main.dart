@@ -5,6 +5,7 @@ import 'ui_defines.dart';
 import 'settings_view.dart';
 import 'log_view.dart';
 import 'log_model.dart';
+import 'utils.dart';
 
 void init() async {
   LogModel.shared.loadLogs();
@@ -21,6 +22,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CupertinoApp(
+      //here disable the font scale in accessibility settings
+      builder: (ctx, w) {
+        return NoScaleTextWidget(child: w);
+      },
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: CupertinoThemeData(

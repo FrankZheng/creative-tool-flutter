@@ -21,7 +21,6 @@
 		97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FD1CF9000F007C117D /* Assets.xcassets */; };
 		97C147011CF9000F007C117D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FF1CF9000F007C117D /* LaunchScreen.storyboard */; };
 		FCDD961D22954E5300718B01 /* ZipArchive.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCDD961B22954E5300718B01 /* ZipArchive.framework */; };
-		FCDD961E22954E5300718B01 /* GCDWebServers.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCDD961C22954E5300718B01 /* GCDWebServers.framework */; };
 		FCDD961F22954E6600718B01 /* GCDWebServers.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCDD961C22954E5300718B01 /* GCDWebServers.framework */; };
 		FCDD962022954E6600718B01 /* GCDWebServers.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FCDD961C22954E5300718B01 /* GCDWebServers.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FCDD962122954E6E00718B01 /* ZipArchive.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCDD961B22954E5300718B01 /* ZipArchive.framework */; };
@@ -37,6 +36,10 @@
 		FCDD963F229551BF00718B01 /* FlutterMediator.m in Sources */ = {isa = PBXBuildFile; fileRef = FCDD9638229551BE00718B01 /* FlutterMediator.m */; };
 		FCDD96442296865C00718B01 /* VungleSDKProxy in Resources */ = {isa = PBXBuildFile; fileRef = FCDD96432296865C00718B01 /* VungleSDKProxy */; };
 		FCDD964A2297829900718B01 /* AppModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FCDD96492297829900718B01 /* AppModel.m */; };
+		FCDD965222997B9400718B01 /* HockeySDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = FCDD965022997B9400718B01 /* HockeySDKResources.bundle */; };
+		FCDD965322997B9400718B01 /* HockeySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCDD965122997B9400718B01 /* HockeySDK.framework */; };
+		FCDD965522997E6800718B01 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = FCDD965422997E6800718B01 /* libz.tbd */; };
+		FCDD965722997EA200718B01 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = FCDD965622997EA100718B01 /* libc++.tbd */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -97,6 +100,10 @@
 		FCDD96432296865C00718B01 /* VungleSDKProxy */ = {isa = PBXFileReference; lastKnownFileType = folder; path = VungleSDKProxy; sourceTree = "<group>"; };
 		FCDD96482297829800718B01 /* AppModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppModel.h; sourceTree = "<group>"; };
 		FCDD96492297829900718B01 /* AppModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppModel.m; sourceTree = "<group>"; };
+		FCDD965022997B9400718B01 /* HockeySDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = HockeySDKResources.bundle; sourceTree = "<group>"; };
+		FCDD965122997B9400718B01 /* HockeySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = HockeySDK.framework; sourceTree = "<group>"; };
+		FCDD965422997E6800718B01 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		FCDD965622997EA100718B01 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,11 +113,13 @@
 			files = (
 				FCDD961D22954E5300718B01 /* ZipArchive.framework in Frameworks */,
 				FCDD961F22954E6600718B01 /* GCDWebServers.framework in Frameworks */,
-				FCDD961E22954E5300718B01 /* GCDWebServers.framework in Frameworks */,
 				9705A1C61CF904A100538489 /* Flutter.framework in Frameworks */,
+				FCDD965322997B9400718B01 /* HockeySDK.framework in Frameworks */,
 				FCDD962122954E6E00718B01 /* ZipArchive.framework in Frameworks */,
 				3B80C3941E831B6300D905FE /* App.framework in Frameworks */,
+				FCDD965522997E6800718B01 /* libz.tbd in Frameworks */,
 				2434B77E1F6ED2CE2532C140 /* libPods-Runner.a in Frameworks */,
+				FCDD965722997EA200718B01 /* libc++.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -152,6 +161,7 @@
 		97C146F01CF9000F007C117D /* Runner */ = {
 			isa = PBXGroup;
 			children = (
+				FCDD964C22997AAD00718B01 /* HockeySDK */,
 				FCDD96432296865C00718B01 /* VungleSDKProxy */,
 				FCDD96252295512A00718B01 /* web */,
 				FCDD96482297829800718B01 /* AppModel.h */,
@@ -201,6 +211,8 @@
 		F0B3A6ECD44501974FFD23DC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FCDD965622997EA100718B01 /* libc++.tbd */,
+				FCDD965422997E6800718B01 /* libz.tbd */,
 				FCDD961C22954E5300718B01 /* GCDWebServers.framework */,
 				FCDD961B22954E5300718B01 /* ZipArchive.framework */,
 				DB165BBB4412C99B9ECA30F7 /* libPods-Runner.a */,
@@ -218,6 +230,24 @@
 			);
 			path = web;
 			sourceTree = "<group>";
+		};
+		FCDD964C22997AAD00718B01 /* HockeySDK */ = {
+			isa = PBXGroup;
+			children = (
+				FCDD964F22997B9400718B01 /* HockeySDK.embeddedframework */,
+			);
+			name = HockeySDK;
+			sourceTree = "<group>";
+		};
+		FCDD964F22997B9400718B01 /* HockeySDK.embeddedframework */ = {
+			isa = PBXGroup;
+			children = (
+				FCDD965022997B9400718B01 /* HockeySDKResources.bundle */,
+				FCDD965122997B9400718B01 /* HockeySDK.framework */,
+			);
+			name = HockeySDK.embeddedframework;
+			path = HockeySDK/HockeySDK.embeddedframework;
+			sourceTree = SOURCE_ROOT;
 		};
 /* End PBXGroup section */
 
@@ -290,6 +320,7 @@
 				FCDD962B2295517E00718B01 /* ok.json in Resources */,
 				9740EEB41CF90195004384FC /* Debug.xcconfig in Resources */,
 				97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */,
+				FCDD965222997B9400718B01 /* HockeySDKResources.bundle in Resources */,
 				97C146FC1CF9000F007C117D /* Main.storyboard in Resources */,
 				FCDD962C2295517E00718B01 /* static in Resources */,
 				FCDD962A2295517E00718B01 /* config.json in Resources */,
@@ -472,9 +503,10 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(PROJECT_DIR)/HockeySDK/HockeySDK.embeddedframework",
 				);
 				INFOPLIST_FILE = Runner/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -601,9 +633,10 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(PROJECT_DIR)/HockeySDK/HockeySDK.embeddedframework",
 				);
 				INFOPLIST_FILE = Runner/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -628,9 +661,10 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(PROJECT_DIR)/HockeySDK/HockeySDK.embeddedframework",
 				);
 				INFOPLIST_FILE = Runner/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
