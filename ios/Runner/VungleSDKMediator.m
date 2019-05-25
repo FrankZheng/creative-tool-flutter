@@ -139,7 +139,7 @@
     
     ret[kReturnValue] = @(YES);
     _proxy.delegate = self;
-    _proxy.networkLoggingEnabled = YES;
+    _proxy.networkLoggingEnabled = NO;
     if(![_proxy startWithAppId:appId
                     placements:placements
                      serverURL:[NSURL URLWithString:serverURL]

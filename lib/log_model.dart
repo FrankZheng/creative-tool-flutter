@@ -181,7 +181,7 @@ class LogModel with ChangeNotifier implements SDKLogDelegate {
         logItem = new JSLog(DateTime.now(), rawLog, endCardName);
         break;
       case "sdk":
-        logItem = new SDKLog(DateTime.now(), rawLog, endCardName);
+        //logItem = new SDKLog(DateTime.now(), rawLog, endCardName);
         break;
       case "error":
         logItem = parseJsError(rawLog, endCardName);
@@ -190,16 +190,17 @@ class LogModel with ChangeNotifier implements SDKLogDelegate {
         logItem = parseJsTrace(rawLog, endCardName);
         break;
     }
-    _logs.add(logItem);
-    notifyListeners();
-
-    //insert to db
-    final db = await database;
-    logItem.id = await db.insert(
-      LOG_TABLE_NAME,
-      logItem.toMap(),
-      conflictAlgorithm: ConflictAlgorithm.replace,
-    );
+    if(logItem != null) {
+      _logs.add(logItem);
+      notifyListeners();
+      //insert to db
+      final db = await database;
+      logItem.id = await db.insert(
+        LOG_TABLE_NAME,
+        logItem.toMap(),
+        conflictAlgorithm: ConflictAlgorithm.replace,
+      );
+    }
   }
 
   @override

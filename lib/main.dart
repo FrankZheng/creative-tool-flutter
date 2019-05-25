@@ -35,6 +35,7 @@ class MyApp extends StatelessWidget {
           ),
           tabLabelTextStyle: TextStyle(
               fontFamily: 'Vungle',
+              fontSize: 14,
               color: Palette.foreColor,
           ),
         ),
