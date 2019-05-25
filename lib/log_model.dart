@@ -3,35 +3,81 @@ import 'dart:convert';
 import 'package:path/path.dart';
 import 'sdk_manager.dart';
 import 'package:flutter/foundation.dart';
+import 'dart:convert';
+import 'web_server.dart';
+import 'package:path/path.dart';
+import 'package:sqflite/sqflite.dart';
+
+
+const DB_NAME = 'app.db';
+const LOG_TABLE_NAME = "logs";
 
 
 class LogItem {
+  int id;
+  final String type;
   final DateTime timestamp;
   final String message;
+  final String bundleZipName;
+  final int version;
 
-  LogItem(this.message, this.timestamp);
+  LogItem(this.id, this.type, this.timestamp,
+          this.message, this.bundleZipName, this.version);
+
+  String extra() { return ''; }
+
+  Map<String, dynamic> toMap() {
+    return {
+      //'id': id,
+      'type': type,
+      'timestamp': timestamp.millisecondsSinceEpoch,
+      'message': message,
+      'extra': extra(),
+      'bundleZipName': bundleZipName,
+      'version': version,
+    };
+  }
+
 }
 
 class JSError extends LogItem {
   final String name;
   final List<String> stack;
 
-  JSError(String message, DateTime timestamp, this.name, this.stack) :
-        super(message, timestamp);
+  JSError(DateTime timestamp, String message, String bundleZipName,
+      this.name, this.stack,
+      {int id = 0, int version = 0}
+      ) : super(id, "error", timestamp, message, bundleZipName, version);
+
+  @override
+  String extra() {
+    return jsonEncode({'name':name, 'stack': stack});
+  }
+
 }
 
 class JSTrace extends LogItem {
   final List<String> stack;
-  JSTrace(String message, DateTime timestamp, this.stack) :
-        super(message, timestamp);
+  JSTrace(DateTime timestamp, String message, String bundleZipName,
+      this.stack, {int id = 0, int version = 0}
+      ) : super(id, "trace", timestamp, message, bundleZipName, version);
+
+  @override
+  String extra() {
+    return jsonEncode({'stack': stack});
+  }
 }
 
 class JSLog extends LogItem {
-  JSLog(String message, DateTime timestamp) : super(message, timestamp);
+  JSLog(DateTime timestamp, String message, String bundleZipName,
+        {int id = 0, int version = 0}
+      ) : super(id, 'log', timestamp, message, bundleZipName, version);
 }
 
 class SDKLog extends LogItem {
-  SDKLog(String message, DateTime timestamp) : super(message, timestamp);
+  SDKLog(DateTime timestamp, String message, String bundleZipName,
+      {int id = 0, int version = 0}
+      ) : super(id, 'sdk', timestamp, message, bundleZipName, version);
 }
 
 class LogModel with ChangeNotifier implements SDKLogDelegate {
@@ -42,59 +88,141 @@ class LogModel with ChangeNotifier implements SDKLogDelegate {
 
   LogModel();
 
+  final _webServer = WebServer.shared;
+
+  Future<Database> _database;
+
+  get database async {
+    if (_database != null) {
+      return _database;
+    }
+    _database = openDatabase(
+        join(await getDatabasesPath(), DB_NAME),
+        onCreate: (db, version) {
+          return db.execute('''
+            CREATE TABLE $LOG_TABLE_NAME(
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            type INTEGER,
+            timestamp INTEGER, 
+            message TEXT, 
+            extra TEXT,
+            bundleZipName TEXT,
+            version INTEGER) 
+            ''');
+        },
+        version: 1
+    );
+    return _database;
+  }
+
   Future<bool> loadLogs() async {
     //load logs from database
+    final db = await database;
+    final List<Map<String, dynamic>> maps = await db.query(LOG_TABLE_NAME);
+    //print('${maps.length} raw logs loaded');
+    maps.forEach((map) {
+      String type = map['type'];
+      int id = map['id'];
+      int ts = map['timestamp'];
+      var timestamp = DateTime.fromMicrosecondsSinceEpoch(ts);
+      String message = map['message'];
+      String bundleZipName = map['bundleZipName'];
+      int version = map['version'];
+      String extra = map['extra'];
+      Map<String, dynamic> json;
+      List<String> stack;
+      if(extra.isNotEmpty) {
+        json = jsonDecode(extra);
+        stack = json['stack'].cast<String>();
+      }
+      LogItem logItem;
+      switch(type) {
+        case 'log':
+          logItem = new JSLog(timestamp, message, bundleZipName, version: version, id:id);
+          break;
+        case 'sdk':
+          logItem = new SDKLog(timestamp, message, bundleZipName, version:version, id:id);
+          break;
+        case 'error':
+          String name = json['name'];
+          logItem = new JSError(timestamp, message, bundleZipName, name, stack, version: version, id:id);
+          break;
+        case 'trace':
+          logItem = new JSTrace(timestamp, message, bundleZipName, stack, version: version, id:id);
+          break;
+        default:
+          break;
+      }
+      if(logItem != null) {
+        //print('new log.id:${logItem.id}');
+        _logs.add(logItem);
+      }
+    });
 
+    print('${_logs.length} logs loaded');
     notifyListeners();
     return true;
   }
 
-  clearLogs() {
+  clearLogs() async{
     _logs = [];
-    //delete all logs from the database
     notifyListeners();
+
+    //delete all logs from the database
+    final db = await database;
+    db.delete(LOG_TABLE_NAME);
   }
 
-  @override
-  void onLog(String type, String rawLog) {
-    //parse the rawLog, create log objects
-    //save to the database
-    //fire the listener
+  void _onLog(String type, String rawLog) async {
+    String endCardName = await _webServer.getEndCardName();
     LogItem logItem;
     switch(type) {
       case "log":
-        logItem = new JSLog(rawLog, DateTime.now());
+        logItem = new JSLog(DateTime.now(), rawLog, endCardName);
         break;
       case "sdk":
-        logItem = new SDKLog(rawLog, DateTime.now());
+        logItem = new SDKLog(DateTime.now(), rawLog, endCardName);
         break;
       case "error":
-        logItem = parseJsError(rawLog);
+        logItem = parseJsError(rawLog, endCardName);
         break;
       case "trace":
-        logItem = parseJsTrace(rawLog);
+        logItem = parseJsTrace(rawLog, endCardName);
         break;
     }
     _logs.add(logItem);
     notifyListeners();
+
+    //insert to db
+    final db = await database;
+    logItem.id = await db.insert(
+      LOG_TABLE_NAME,
+      logItem.toMap(),
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
   }
 
-  LogItem parseJsError(String rawLog) {
+  @override
+  void onLog(String type, String rawLog) {
+    _onLog(type, rawLog);
+  }
+
+  LogItem parseJsError(String rawLog, String endCardName) {
     Map<String, dynamic> json = jsonDecode(rawLog);
     String msg = json['msg'] as String;
     String name = json['errName'] as String;
     String stack = json['stack'] as String;
     var stackLines = parseStack(stack);
-    return JSError(msg, DateTime.now(), name, stackLines);
+    return JSError(DateTime.now(), msg, endCardName, name, stackLines);
   }
 
-  LogItem parseJsTrace(String rawLog) {
+  LogItem parseJsTrace(String rawLog, String endCardName) {
     String msg = "Trace";
     var stackLines = parseStack(rawLog);
     if(stackLines.length > 0) {
       stackLines.removeAt(0);
     }
-    return JSTrace(msg, DateTime.now(), stackLines);
+    return JSTrace(DateTime.now(), msg, endCardName, stackLines);
   }
 
   List<String> parseStack(String stack) {

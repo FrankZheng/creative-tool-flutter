@@ -26,11 +26,13 @@ class WebServer {
   final webServerCallbackChan = MethodChannel(WEB_SERVER_CALLBACK_CHAN);
 
   bool _verifyRequiredJsCalls;
+  String _endCardName;
 
   WebServer() {
     webServerCallbackChan.setMethodCallHandler((call) {
+      _endCardName = call.arguments;
       _listeners.forEach((listener) {
-        listener.onEndCardUploaded(call.arguments);
+        listener.onEndCardUploaded(_endCardName);
       });
     });
 
@@ -56,7 +58,11 @@ class WebServer {
   }
 
   Future<String> getEndCardName() async {
-    return await webServerChan.invokeMethod(END_CARD_NAME);
+    if( _endCardName != null) {
+      return _endCardName;
+    }
+    _endCardName = await webServerChan.invokeMethod(END_CARD_NAME);
+    return _endCardName;
   }
 
   //if check required js calls in the end card

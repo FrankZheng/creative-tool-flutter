@@ -89,7 +89,6 @@ class _LogViewState extends State<LogView> {
   @override
   void initState() {
     super.initState();
-    _model.loadLogs();
   }
 
   @override

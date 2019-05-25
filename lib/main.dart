@@ -4,8 +4,14 @@ import 'home_view.dart';
 import 'ui_defines.dart';
 import 'settings_view.dart';
 import 'log_view.dart';
+import 'log_model.dart';
+
+void init() async {
+  LogModel.shared.loadLogs();
+}
 
 void main() {
+  init();
   var app = MyApp();
   runApp(app);
 }

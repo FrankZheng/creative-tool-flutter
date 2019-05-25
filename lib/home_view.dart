@@ -294,11 +294,11 @@ class BrowserBox extends StatelessWidget {
         children: <Widget>[
           Expanded(
             child: Container(
-              margin: EdgeInsets.only(left:50, top: 50, right: 20),
+              margin: EdgeInsets.only(left:40, top: 50, right: 20),
               //color: Colors.yellow,
               child: Text(
                 url,
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
+                style: TextStyle(fontSize: 17, fontWeight: FontWeight.w700),
                 textAlign: TextAlign.center,
               ),
             ),
