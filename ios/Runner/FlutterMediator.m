@@ -9,21 +9,7 @@
 #import "WebServer.h"
 #import "ResourceManager.h"
 #import "AppModel.h"
-
-
-//Web Server channel and method names
-#define kWebServerChan @"com.vungle.vcltool/webserver"
-#define kEndcardName @"endCardName"
-#define kServerURL @"serverURL"
-#define kLocalhostURL @"localhostURL"
-#define kEnableVerifyJsCalls @"enableVerifyRequiredJsCalls"
-
-//Web Server callbacks channel and method names
-#define kWebServerCallbackChan @"com.vungle.vcltool/webserverCallbacks"
-#define kEndcardUploaded @"endcardUploaded"
-
-#define kAppChan @"com.vungle.vcltool/app"
-#define kCloseApp @"closeApp"
+#import "FlutterChannelDefines.h"
 
 @interface FlutterMediator() <WebServerDelegate, UIAlertViewDelegate>
 @property(nonatomic, strong) FlutterViewController *controller;

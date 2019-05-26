@@ -7,39 +7,10 @@
 //
 
 #import "VungleSDKMediator.h"
-//@import VungleSDKProxy;
 #import "VungleSDKProxyProtocol.h"
+#import "FlutterChannelDefines.h"
+#import "MethodResultBuilder.h"
 
-
-//SDK channel and method names
-#define kSDKChan @"com.vungle.vcltool/vungleSDK"
-#define kSDKVerson @"sdkVersion"
-#define kIsInitialized @"isInitialized"
-#define kStartApp @"startApp"
-#define kLoadAd @"loadAd"
-#define kPlayAd @"playAd"
-#define kForceCloseAd @"forceCloseAd"
-#define kClearCache @"clearCache"
-#define kIsCached @"isCached"
-#define kSDKVersionList @"sdkVersionList"
-
-//SDK callbacks channel and method names
-#define kSDKCallbackChan @"com.vungle.vcltool/vungleSDKCallbacks"
-#define kSDKDidInitialized @"sdkDidInitialized"
-#define kSDKFailedToInitialize @"sdkFailedToInitialize"
-#define kAdLoaded @"adLoaded"
-#define kAdLoadFailed @"adLoadFailed"
-#define kAdWillShow @"adWillShow"
-#define kAdWillClose @"adWillClose"
-#define kAdDidClose @"adDidClose"
-#define kOnLog @"onLog"
-
-#define kReturnValue @"return"
-#define kErrCode @"errCode"
-#define kErrMsg @"errMsg"
-
-//TODO: add utility for NSError -> dictionary
-//TODO: add utility for encode placement id to dictionary
 
 #define kDefaultSDKVersion @"6.3.2"
 
@@ -122,39 +93,33 @@
 
 - (NSDictionary*)startSDK:(NSDictionary *)params {
     //load sdk by it's version
-    NSMutableDictionary *ret = [NSMutableDictionary dictionary];
+    MethodResultBuilder *builder = [MethodResultBuilder builder];
     NSString *appId = params[@"appId"];
     NSArray<NSString *> *placements = params[@"placements"];
     NSString *serverURL = params[@"serverURL"];
     NSString *sdkVersion = params[@"sdkVersion"];
     NSError *error = nil;
     if(![self loadSDK:sdkVersion error:&error]) {
-        ret[kReturnValue] = @(NO);
-        if(error != nil) {
-            ret[kErrCode] = @(error.code);
-            ret[kErrMsg] = error.localizedDescription;
-        }
-        return ret;
+        [builder didError:error];
+        return [builder build];
     }
-    
-    ret[kReturnValue] = @(YES);
     _proxy.delegate = self;
     _proxy.networkLoggingEnabled = NO;
+    
     if(![_proxy startWithAppId:appId
                     placements:placements
                      serverURL:[NSURL URLWithString:serverURL]
                          error:&error]) {
-        ret[kReturnValue] = @(NO);
-        if(error != nil) {
-            ret[kErrCode] = @(error.code);
-            ret[kErrMsg] = error.localizedDescription;
-        }
+        [builder didError:error];
     }
-    return [ret copy];
+    return [builder build];
 }
 
 - (void)handleSDKMethods:(FlutterMethodCall *)call result:(FlutterResult)result {
-    NSLog(@"handleSDKMethods, method: %@, args: %@", call.method, call.arguments);
+    //NSLog(@"handleSDKMethods, method: %@, args: %@", call.method, call.arguments);
+    MethodResultBuilder *builder = [MethodResultBuilder builder];
+    NSError *error = nil;
+    
     if([kSDKVerson isEqualToString:call.method]) {
         //sdk version
         result(_proxy.version);
@@ -170,45 +135,27 @@
         result(@([_proxy isAdCachedForPlacementID:placementId]));
     } else if([kLoadAd isEqualToString:call.method]) {
         NSString *placementId = call.arguments;
-        NSMutableDictionary *ret = [NSMutableDictionary dictionary];
-        ret[kReturnValue] = @(YES);
-        NSError *error = nil;
         if(![_proxy loadPlacementWithID:placementId error:&error]) {
-            ret[kReturnValue] = @(NO);
-            if(error != nil) {
-                ret[kErrCode] = @(error.code);
-                ret[kErrMsg] = error.localizedDescription;
-            }
+            [builder didError:error];
         }
-        result(ret);
+        result([builder build]);
     } else if([kPlayAd isEqualToString:call.method]) {
         //play ad
         NSDictionary *params = call.arguments;
         NSString *placementId = params[@"placementId"];
         NSNumber *isCORs = params[@"isCORs"];
-        NSMutableDictionary *ret = [NSMutableDictionary dictionary];
-        ret[kReturnValue] = @(YES);
-        NSError *error = nil;
         if(![_proxy playAd:_controller options:nil placementID:placementId enableCORs:isCORs.boolValue error:&error]) {
-            ret[kReturnValue] = @(NO);
-            if(error != nil) {
-                ret[kErrCode] = @(error.code);
-                ret[kErrMsg] = error.localizedDescription;
-            }
+            [builder didError:error];
         }
-        result(ret);
+        result([builder build]);
     } else if([kClearCache isEqualToString:call.method]) {
         //clear cache
         NSString *placementId = call.arguments;
         [_proxy clearCacheForPlacement:placementId completionBlock:^(NSError * _Nonnull error) {
-            NSMutableDictionary *ret = [NSMutableDictionary dictionary];
-            ret[kReturnValue] = @(YES);
             if(error != nil) {
-                ret[kReturnValue] = @(NO);
-                ret[kErrCode] = @(error.code);
-                ret[kErrMsg] = error.localizedDescription;
+                [builder didError:error];
             }
-            result(ret);
+            result([builder build]);
         }];
     } else if([kForceCloseAd isEqualToString:call.method]) {
         //force close ad

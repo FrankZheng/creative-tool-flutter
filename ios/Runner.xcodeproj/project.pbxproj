@@ -40,6 +40,7 @@
 		FCDD965322997B9400718B01 /* HockeySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCDD965122997B9400718B01 /* HockeySDK.framework */; };
 		FCDD965522997E6800718B01 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = FCDD965422997E6800718B01 /* libz.tbd */; };
 		FCDD965722997EA200718B01 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = FCDD965622997EA100718B01 /* libc++.tbd */; };
+		FCDD9662229A469B00718B01 /* MethodResultBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = FCDD9660229A469B00718B01 /* MethodResultBuilder.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -104,6 +105,9 @@
 		FCDD965122997B9400718B01 /* HockeySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = HockeySDK.framework; sourceTree = "<group>"; };
 		FCDD965422997E6800718B01 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		FCDD965622997EA100718B01 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
+		FCDD965F229A469B00718B01 /* MethodResultBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MethodResultBuilder.h; sourceTree = "<group>"; };
+		FCDD9660229A469B00718B01 /* MethodResultBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MethodResultBuilder.m; sourceTree = "<group>"; };
+		FCDD9661229A469B00718B01 /* FlutterChannelDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlutterChannelDefines.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -168,6 +172,9 @@
 				FCDD96492297829900718B01 /* AppModel.m */,
 				FCDD9635229551BE00718B01 /* AppInitializer.h */,
 				FCDD9637229551BE00718B01 /* AppInitializer.m */,
+				FCDD9661229A469B00718B01 /* FlutterChannelDefines.h */,
+				FCDD965F229A469B00718B01 /* MethodResultBuilder.h */,
+				FCDD9660229A469B00718B01 /* MethodResultBuilder.m */,
 				FCDD962E229551BE00718B01 /* FlutterMediator.h */,
 				FCDD9638229551BE00718B01 /* FlutterMediator.m */,
 				FCDD962F229551BE00718B01 /* ResourceManager.h */,
@@ -412,6 +419,7 @@
 				FCDD963E229551BF00718B01 /* AppInitializer.m in Sources */,
 				FCDD963B229551BF00718B01 /* VungleSDKMediator.m in Sources */,
 				978B8F6F1D3862AE00F588F7 /* AppDelegate.m in Sources */,
+				FCDD9662229A469B00718B01 /* MethodResultBuilder.m in Sources */,
 				97C146F31CF9000F007C117D /* main.m in Sources */,
 				1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */,
 				FCDD963A229551BF00718B01 /* ResourceManager.m in Sources */,
