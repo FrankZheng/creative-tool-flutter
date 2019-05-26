@@ -29,6 +29,7 @@ dependencies:
   sqflite: ^1.1.5
   connectivity: ^0.4.3+1
   shared_preferences: ^0.5.2+1
+  intl: ^0.15.8
 
 dev_dependencies:
   flutter_test:

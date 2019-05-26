@@ -84,11 +84,10 @@ class WebServer {
   }
 
   Future<bool> verifyRequiredJsCalls() async {
-    if (_verifyRequiredJsCalls != null) {
-      return _verifyRequiredJsCalls;
+    if (_verifyRequiredJsCalls == null) {
+      final prefs = await SharedPreferences.getInstance();
+      _verifyRequiredJsCalls = prefs.getBool(PREFS_VERIFY_REQUIRED_JS_CALLS) ?? true;
     }
-    final prefs = await SharedPreferences.getInstance();
-    _verifyRequiredJsCalls = prefs.getBool(PREFS_VERIFY_REQUIRED_JS_CALLS) ?? true;
     return _verifyRequiredJsCalls;
   }
 

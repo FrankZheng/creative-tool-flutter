@@ -5,6 +5,7 @@ import 'sdk_manager.dart';
 import 'package:flutter/foundation.dart';
 import 'web_server.dart';
 import 'package:sqflite/sqflite.dart';
+import 'utils.dart';
 
 
 const DB_NAME = 'app.db';
@@ -122,7 +123,7 @@ class LogModel with ChangeNotifier implements SDKLogDelegate {
       String type = map['type'];
       int id = map['id'];
       int ts = map['timestamp'];
-      var timestamp = DateTime.fromMicrosecondsSinceEpoch(ts);
+      var timestamp = DateTime.fromMillisecondsSinceEpoch(ts);
       String message = map['message'];
       String bundleZipName = map['bundleZipName'];
       int version = map['version'];
@@ -211,13 +212,13 @@ class LogModel with ChangeNotifier implements SDKLogDelegate {
     String msg = json['msg'] as String;
     String name = json['errName'] as String;
     String stack = json['stack'] as String;
-    var stackLines = parseStack(stack);
+    var stackLines = StringUtils.isEmpty(stack) ? <String>[] : parseStack(stack);
     return JSError(DateTime.now(), msg, endCardName, name, stackLines);
   }
 
   LogItem parseJsTrace(String rawLog, String endCardName) {
     String msg = "Trace";
-    var stackLines = parseStack(rawLog);
+    var stackLines = StringUtils.isEmpty(rawLog) ? <String>[] :  parseStack(rawLog);
     if(stackLines.length > 0) {
       stackLines.removeAt(0);
     }

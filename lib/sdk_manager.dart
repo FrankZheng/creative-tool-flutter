@@ -40,6 +40,15 @@ class SDKManager implements VungleSDKListener {
     _logDelegate = LogModel.shared;
   }
 
+  Future<SharedPreferences> _prefs;
+
+  get prefs {
+    if(_prefs == null) {
+      _prefs = SharedPreferences.getInstance();  
+    }
+    return _prefs;
+  }
+
 
   void addDelegate(SDKDelegate delegate) {
     _delegates.add(delegate);
@@ -50,9 +59,9 @@ class SDKManager implements VungleSDKListener {
   }
 
   Future<bool> start(String serverURL) async {
-    var prefs = await this._prefs();
-    var sdkVersion = prefs.getString(PREFS_SDK_VERSION) ?? '';
-    return await _sdk.start(APP_ID, [PID], serverURL, sdkVersion);
+    final p = await prefs;
+    var sdkVersion = p.getString(PREFS_SDK_VERSION) ?? '';
+    return _sdk.start(APP_ID, [PID], serverURL, sdkVersion);
   }
 
   void loadAd() {
@@ -113,12 +122,8 @@ class SDKManager implements VungleSDKListener {
   }
 
   Future<bool> switchSDKVersion(String version) async {
-    var prefs = await this._prefs();
-    return await prefs.setString(PREFS_SDK_VERSION, version);
-  }
-
-  Future<SharedPreferences> _prefs() async {
-    return await SharedPreferences.getInstance();
+    final p = await prefs;
+    return p.setString(PREFS_SDK_VERSION, version);
   }
 
   Future<List<String>> getSDKVersions() async {
@@ -126,18 +131,17 @@ class SDKManager implements VungleSDKListener {
   }
 
   Future<bool> isCORsEnabled() async {
-    if(_isCORsEnabled != null) {
-      return _isCORsEnabled;
+    if(_isCORsEnabled == null) {
+      final p = await prefs;
+      _isCORsEnabled = p.getBool(PREFS_IS_CORS_ENABLED) ?? false;
     }
-    var pres = await _prefs();
-    _isCORsEnabled = pres.getBool(PREFS_IS_CORS_ENABLED) ?? false;
     return _isCORsEnabled;
   }
 
   void enableCORs(bool enabled) async {
     _isCORsEnabled = enabled;
-    var pres = await _prefs();
-    pres.setBool(PREFS_IS_CORS_ENABLED, enabled);
+    final p = await prefs;
+    p.setBool(PREFS_IS_CORS_ENABLED, enabled);
   }
 
   @override
