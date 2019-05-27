@@ -77,9 +77,16 @@ class SettingsViewState extends State<SettingsView> {
 
     if (_appVersion != null) {
       items.add(Spacer());
-      items.add(Text(
-        _appVersion,
-        style: TextStyle(color: Colors.blue, fontSize: 18))
+      items.add(Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Image.asset('assets/VungleV.png', width: 30, height: 30,),
+          SizedBox(width:8 ,),
+          Text(
+            _appVersion,
+            style: TextStyle(color: Colors.blue, fontSize: 18)),
+        ],
+      )
       );
     }
 

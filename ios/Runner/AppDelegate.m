@@ -5,7 +5,7 @@
 #import "VungleSDKMediator.h"
 @import HockeySDK;
 
-#define kHockeyAppId @"9e59f741179240f8a6570a2dc3653508"
+#define kHockeyAppId @"f804b56571a54567875a445545f74b78"
 
 @implementation AppDelegate
 

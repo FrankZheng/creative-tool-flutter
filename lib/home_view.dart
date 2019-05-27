@@ -345,13 +345,13 @@ class SDKVersionBox extends StatelessWidget {
         children: <Widget>[
           Text('SDK VERSION'),
           Spacer(),
-          RaisedButton(
-              color: Colors.white,
-              textColor: Colors.blue,
-              onPressed: _onPressed,
-              child: Text(StringUtils.safe(_sdkVersion)),
-              shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(4.0), )
-          )
+          OutlineButton(
+            textColor: Colors.blue,
+            child: Text(StringUtils.safe(_sdkVersion)),
+            onPressed: _onPressed,
+            borderSide: BorderSide(color: Colors.blue),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6.0))
+            )
         ],
       ),
     );
