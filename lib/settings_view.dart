@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'sdk_manager.dart';
 import 'web_server.dart';
 import 'app_model.dart';
-
+import 'ui_defines.dart';
 
 class SettingsView extends StatefulWidget {
 
@@ -84,7 +84,7 @@ class SettingsViewState extends State<SettingsView> {
           SizedBox(width:8 ,),
           Text(
             _appVersion,
-            style: TextStyle(color: Colors.blue, fontSize: 18)),
+            style: TextStyle(color: Palette.vungleBlue, fontSize: 18)),
         ],
       )
       );

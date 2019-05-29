@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:connectivity/connectivity.dart';
+import 'package:vungle_creative_tool/ui_defines.dart';
 import 'dart:async';
 import 'web_server.dart';
 import 'sdk_manager.dart';
@@ -346,10 +347,10 @@ class SDKVersionBox extends StatelessWidget {
           Text('SDK VERSION'),
           Spacer(),
           OutlineButton(
-            textColor: Colors.blue,
+            textColor: Palette.vungleBlue,
             child: Text(StringUtils.safe(_sdkVersion)),
             onPressed: _onPressed,
-            borderSide: BorderSide(color: Colors.blue),
+            borderSide: BorderSide(color: Palette.vungleBlue),
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6.0))
             )
         ],
@@ -423,7 +424,7 @@ class BottomButtonBox extends StatelessWidget {
       );
     }
     var button = RaisedButton(
-        color: Colors.blue,
+        color: Palette.vungleBlue,
         textColor: Colors.white,
         onPressed: _playBtnEnabled ? _onPressed : _emptyOnPressed,
         child: child,
