@@ -3,6 +3,7 @@ import 'package:package_info/package_info.dart';
 
 
 const APP_CHAN = 'com.vungle.vcltool/app';
+const INITIALIZE = "initialize";
 const CLOSE_APP = 'closeApp';
 
 
@@ -12,6 +13,10 @@ class AppModel {
   String _appVersion;
 
   AppModel();
+
+  Future<void> init() async{
+    return await chan.invokeMethod(INITIALIZE);
+  }
 
   void closeApp() {
     chan.invokeMethod(CLOSE_APP);
@@ -25,5 +30,7 @@ class AppModel {
     _appVersion = '${packageInfo.version}_${packageInfo.buildNumber}';
     return _appVersion;
   }
+
+
 
 }

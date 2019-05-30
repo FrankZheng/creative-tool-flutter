@@ -38,4 +38,5 @@ public class FlutterChannelDefines {
 
     public static final String kAppChan = "com.vungle.vcltool/app";
     public static final String kCloseApp = "closeApp";
+    public static final String kInitialize = "initialize";
 }

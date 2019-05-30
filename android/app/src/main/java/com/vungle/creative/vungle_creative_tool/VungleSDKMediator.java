@@ -1,7 +1,7 @@
 package com.vungle.creative.vungle_creative_tool;
 
 import android.content.Context;
-import android.renderscript.Allocation;
+import android.util.Log;
 
 import com.vungle.warren.AdConfig;
 import com.vungle.warren.InitCallback;
@@ -12,15 +12,13 @@ import com.vungle.warren.error.VungleError;
 import com.vungle.warren.network.VungleApiClient;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import io.flutter.plugin.common.FlutterException;
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.view.FlutterView;
@@ -28,11 +26,12 @@ import io.flutter.view.FlutterView;
 public class VungleSDKMediator {
     private static VungleSDKMediator sInstance = null;
     private static final String TAG = VungleSDKMediator.class.getSimpleName();
+    private static final String PLACEMENT_ID = "placementId";
+    private static final String SDK_VERSION = "6.3.24";
 
     private MethodChannel sdkCallbackChan;
-    private MethodChannel sdkChan;
     private Context context;
-    private LinkedList<String> queue = new LinkedList<>();
+    private boolean enableCORs = false;
 
     public static VungleSDKMediator getInstance(Context context) {
         if(sInstance == null) {
@@ -41,20 +40,34 @@ public class VungleSDKMediator {
         return sInstance;
     }
 
+    public static VungleSDKMediator getInstance() {
+        return sInstance;
+    }
+
     private VungleSDKMediator(Context context) {
         this.context = context.getApplicationContext();
     }
 
-
     public void init(FlutterView flutterView) {
         sdkCallbackChan = new MethodChannel(flutterView, FlutterChannelDefines.kSDKCallbackChan);
-        sdkChan = new MethodChannel(flutterView, FlutterChannelDefines.kSDKChan);
+        final MethodChannel sdkChan = new MethodChannel(flutterView, FlutterChannelDefines.kSDKChan);
         sdkChan.setMethodCallHandler(new MethodChannel.MethodCallHandler() {
             @Override
             public void onMethodCall(MethodCall methodCall, MethodChannel.Result result) {
                 handleSDKMethods(methodCall, result);
             }
         });
+    }
+
+    public void onJsLog(String type, String rawLog) {
+        Map<String, String> map = new HashMap<>();
+        map.put("type", type);
+        map.put("rawLog", rawLog);
+        sdkCallbackChan.invokeMethod(FlutterChannelDefines.kOnLog, map);
+    }
+
+    public boolean isCORsEnabled() {
+        return enableCORs;
     }
 
     private Map<String, Object> toErrorMap(Throwable e) {
@@ -75,9 +88,9 @@ public class VungleSDKMediator {
 
     private void startSDK(MethodCall methodCall, MethodChannel.Result result) {
         String appId = methodCall.argument("appId");
-        //List<String> placementds = methodCall.argument("placements");
         String serverUrl = methodCall.argument("serverURL");
         //String sdkVersion = methodCall.argument("sdkVersion");
+        //List<String> placementds = methodCall.argument("placements");
 
         setSDKAPIEndpoint(serverUrl);
 
@@ -85,9 +98,6 @@ public class VungleSDKMediator {
             @Override
             public void onSuccess() {
                 sdkCallbackChan.invokeMethod(FlutterChannelDefines.kSDKDidInitialized, null);
-                if(!queue.isEmpty()) {
-                    doLoadAd(queue.poll());
-                }
             }
 
             @Override
@@ -103,7 +113,7 @@ public class VungleSDKMediator {
         result.success(toSuccessMap());
     }
 
-    private void doLoadAd(String placementId) {
+    private void loadAd(String placementId, MethodChannel.Result result) {
         Vungle.loadAd(placementId, new LoadAdCallback() {
             @Override
             public void onAdLoad(String s) {
@@ -115,19 +125,6 @@ public class VungleSDKMediator {
                 sdkCallbackChan.invokeMethod(FlutterChannelDefines.kAdLoadFailed, toErrorMap(throwable));
             }
         });
-    }
-
-    private void loadAd(String placementId, MethodChannel.Result result) {
-        if(Vungle.isInitialized()) {
-
-            if(Vungle.canPlayAd(placementId)) {
-                //TODO: clear cache
-            }
-            doLoadAd(placementId);
-        } else {
-            queue.offer(placementId);
-        }
-
         result.success(toSuccessMap());
     }
 
@@ -136,14 +133,18 @@ public class VungleSDKMediator {
         config.setAutoRotate(true);
         Vungle.playAd(placementId, config, new PlayAdCallback() {
             @Override
-            public void onAdStart(String s) {
-                sdkCallbackChan.invokeMethod(FlutterChannelDefines.kAdWillShow, placementId);
+            public void onAdStart(String pId) {
+                sdkCallbackChan.invokeMethod(FlutterChannelDefines.kAdWillShow, pId);
             }
 
             @Override
-            public void onAdEnd(String s, boolean b, boolean b1) {
-                sdkCallbackChan.invokeMethod(FlutterChannelDefines.kAdWillClose, placementId);
-                sdkCallbackChan.invokeMethod(FlutterChannelDefines.kAdDidClose, placementId);
+            public void onAdEnd(String pId, boolean completed, boolean didDownload) {
+                Map<String, Object> args = new HashMap<>();
+                args.put(PLACEMENT_ID, pId);
+                args.put("completed", completed);
+                args.put("didDownload", didDownload);
+                sdkCallbackChan.invokeMethod(FlutterChannelDefines.kAdWillClose, args);
+                sdkCallbackChan.invokeMethod(FlutterChannelDefines.kAdDidClose, args);
             }
 
             @Override
@@ -155,32 +156,43 @@ public class VungleSDKMediator {
     }
 
     private void handleSDKMethods(MethodCall methodCall, MethodChannel.Result result) {
-        String placementId = methodCall.argument("placementId");
+        Log.d(TAG, "handleSDKMethods: " + methodCall.method + "," + methodCall.arguments);
+        String placementId;
         switch (methodCall.method) {
             case FlutterChannelDefines.kSDKVersion:
-                result.success("6.3.24");
+                result.success(SDK_VERSION);
                 break;
             case FlutterChannelDefines.kSDKVersionList:
-                result.success(Collections.singleton("6.3.24"));
+                List<String> versions = new ArrayList<>();
+                versions.add(SDK_VERSION);
+                result.success(versions);
                 break;
             case FlutterChannelDefines.kStartApp:
                 startSDK(methodCall, result);
                 break;
             case FlutterChannelDefines.kIsCached:
+                placementId = (String)methodCall.arguments;
                 result.success(Vungle.canPlayAd(placementId));
                 break;
             case FlutterChannelDefines.kLoadAd:
+                placementId = (String)methodCall.arguments;
                 loadAd(placementId, result);
                 break;
             case FlutterChannelDefines.kPlayAd:
+                Boolean enabled = methodCall.argument("isCORs");
+                if(enabled != null) {
+                    enableCORs = enabled;
+                }
+                placementId = methodCall.argument(PLACEMENT_ID);
                 playAd(placementId, result);
                 break;
             case FlutterChannelDefines.kClearCache:
-                //TODO: to implement
+                placementId = (String)methodCall.arguments;
+                clearCache(placementId);
                 result.success(toSuccessMap());
                 break;
             case FlutterChannelDefines.kForceCloseAd:
-                //TODO: to implement
+                VungleSDKRespectJ.forceCloseAd();
                 result.success(toSuccessMap());
                 break;
             default:
@@ -197,6 +209,21 @@ public class VungleSDKMediator {
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void clearCache(String placementId) {
+        //Android SDK only support clear all cache
+        try {
+            Method m = Vungle.class.getDeclaredMethod("clearCache");
+            m.setAccessible(true);
+            m.invoke(null);
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
             e.printStackTrace();
         }
     }

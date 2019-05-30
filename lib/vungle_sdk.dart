@@ -122,7 +122,7 @@ class VungleSDK {
 
   //handle callbacks
   Future<dynamic> _onCallback(MethodCall call) async {
-    //print('_onCallback, method:${call.method}, arguments:${call.arguments}');
+    print('_onCallback, method:${call.method}, arguments:${call.arguments}');
     switch (call.method) {
       case SDK_INITIALIZED:
         _initialized = true;

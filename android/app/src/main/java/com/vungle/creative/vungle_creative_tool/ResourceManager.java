@@ -13,6 +13,7 @@ import java.io.OutputStream;
 
 public class ResourceManager {
     private static final String TAG = ResourceManager.class.getSimpleName();
+    private static final ResourceManager sInstance = new ResourceManager();
     private String injectJs;
     private File assetsDir;
     private File uploadDir;
@@ -32,8 +33,8 @@ public class ResourceManager {
         return uploadDir;
     }
 
-    public ResourceManager() {
-
+    public static ResourceManager getInstance() {
+        return sInstance;
     }
 
     public void init(@NonNull final Context context) {

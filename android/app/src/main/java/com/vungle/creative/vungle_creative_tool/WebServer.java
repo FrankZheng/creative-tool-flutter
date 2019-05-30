@@ -25,6 +25,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 
@@ -34,22 +35,28 @@ public class WebServer extends SimpleWebServer {
     private static final String MIME_TYPE_JSON = "application/json";
 
     private String localHostUrl;
-
     private JSONObject configTemplate;
     private String adsTemplate;
-
     private File uploadDir;
     private String endCardName;
-
-    boolean verifyRequiredJsCalls = true;
-
+    private boolean verifyRequiredJsCalls = true;
     private String serverUrl; //for external users to upload creative
 
     public interface Listener {
         void onEndCardUploaded(String zipName);
     }
 
-    Listener listener;
+    private Listener listener;
+
+    private static WebServer sInstance;
+
+    public static WebServer getInstance() {
+        return sInstance;
+    }
+
+    public static void setInstance(WebServer instance) {
+        sInstance = instance;
+    }
 
     public WebServer(int port, File rootDir, File uploadDir, boolean quiet) {
         super(null, port, rootDir, quiet);
@@ -63,13 +70,17 @@ public class WebServer extends SimpleWebServer {
     }
 
     @Nullable
-    public String getServerUrl(Context context) {
+    public String getServerUrl(Context ctx) {
         if(serverUrl == null) {
+            Context context = ctx.getApplicationContext();
             WifiManager wifiMan = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-            WifiInfo wifiInf = wifiMan.getConnectionInfo();
-            int ipAddress = wifiInf.getIpAddress();
-            String ip = String.format("%d.%d.%d.%d", (ipAddress & 0xff),(ipAddress >> 8 & 0xff),(ipAddress >> 16 & 0xff),(ipAddress >> 24 & 0xff));
-            serverUrl = "http://" + ip + ":" + myPort;
+            if(wifiMan != null) {
+                WifiInfo wifiInf = wifiMan.getConnectionInfo();
+                int ipAddress = wifiInf.getIpAddress();
+                String ip = String.format(Locale.getDefault(), "%d.%d.%d.%d",
+                        (ipAddress & 0xff), (ipAddress >> 8 & 0xff), (ipAddress >> 16 & 0xff), (ipAddress >> 24 & 0xff));
+                serverUrl = "http://" + ip + ":" + myPort;
+            }
         }
         return serverUrl;
     }
