@@ -1,5 +1,6 @@
 package com.vungle.creative.vungle_creative_tool;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 
 import io.flutter.plugin.common.MethodCall;
@@ -7,15 +8,20 @@ import io.flutter.plugin.common.MethodChannel;
 import io.flutter.view.FlutterView;
 
 public class FlutterMediator implements WebServer.Listener {
-    private static final FlutterMediator sInstance = new FlutterMediator();
+    private static FlutterMediator sInstance;
 
     private MethodChannel webServerCallbackChan;
+    private MethodChannel webServerChan;
+    private Context context;
 
-    private FlutterMediator() {
-
+    private FlutterMediator(Context context) {
+        this.context = context.getApplicationContext();
     }
 
-    public static FlutterMediator getInstance() {
+    public static FlutterMediator getInstance(Context context) {
+        if(sInstance == null) {
+            sInstance = new FlutterMediator(context);
+        }
         return sInstance;
     }
 
@@ -23,7 +29,8 @@ public class FlutterMediator implements WebServer.Listener {
         final WebServer webServer = App.getWebServer();
         webServer.listener = this;
 
-        new MethodChannel(flutterView, FlutterChannelDefines.kWebServerChan).setMethodCallHandler(new MethodChannel.MethodCallHandler() {
+        webServerChan = new MethodChannel(flutterView, FlutterChannelDefines.kWebServerChan);
+        webServerChan.setMethodCallHandler(new MethodChannel.MethodCallHandler() {
             @Override
             public void onMethodCall(MethodCall methodCall, MethodChannel.Result result) {
                 handleWebServerMethods(methodCall, result);
@@ -38,7 +45,7 @@ public class FlutterMediator implements WebServer.Listener {
         final WebServer webServer = App.getWebServer();
         switch (methodCall.method) {
             case FlutterChannelDefines.kServerURL:
-                result.success(webServer.getServerUrl());
+                result.success(webServer.getServerUrl(context));
                 break;
             case FlutterChannelDefines.kLocalhostURL:
                 result.success(webServer.getLocalHostUrl());

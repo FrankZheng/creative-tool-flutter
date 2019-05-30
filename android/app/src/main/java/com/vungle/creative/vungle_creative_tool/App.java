@@ -1,6 +1,5 @@
 package com.vungle.creative.vungle_creative_tool;
 
-import android.app.Application;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
@@ -55,6 +54,7 @@ public class App extends FlutterApplication {
         return resourceManager;
     }
 
+    @NonNull
     public static boolean isInitialized() {
         return initialized.get();
     }

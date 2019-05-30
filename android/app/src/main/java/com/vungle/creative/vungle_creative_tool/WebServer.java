@@ -2,6 +2,8 @@ package com.vungle.creative.vungle_creative_tool;
 
 
 import android.content.Context;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -61,7 +63,14 @@ public class WebServer extends SimpleWebServer {
     }
 
     @Nullable
-    public String getServerUrl() {
+    public String getServerUrl(Context context) {
+        if(serverUrl == null) {
+            WifiManager wifiMan = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+            WifiInfo wifiInf = wifiMan.getConnectionInfo();
+            int ipAddress = wifiInf.getIpAddress();
+            String ip = String.format("%d.%d.%d.%d", (ipAddress & 0xff),(ipAddress >> 8 & 0xff),(ipAddress >> 16 & 0xff),(ipAddress >> 24 & 0xff));
+            serverUrl = "http://" + ip + ":" + myPort;
+        }
         return serverUrl;
     }
 
