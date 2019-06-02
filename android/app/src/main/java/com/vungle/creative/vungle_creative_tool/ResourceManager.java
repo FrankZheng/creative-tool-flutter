@@ -13,10 +13,10 @@ import java.io.OutputStream;
 
 public class ResourceManager {
     private static final String TAG = ResourceManager.class.getSimpleName();
-    private static final ResourceManager sInstance = new ResourceManager();
+    private static ResourceManager sInstance = null;
     private String injectJs;
-    private File assetsDir;
-    private File uploadDir;
+    private final File assetsDir;
+    private final File uploadDir;
 
     @Nullable
     public String getInjectJs() {
@@ -31,6 +31,16 @@ public class ResourceManager {
     @Nullable
     public File getUploadDir() {
         return uploadDir;
+    }
+
+    private ResourceManager(File assetsDir, File uploadDir) {
+        this.assetsDir = assetsDir;
+        this.uploadDir = uploadDir;
+    }
+
+    public static ResourceManager create(File assetsDir, File uploadDir) {
+        sInstance = new ResourceManager(assetsDir, uploadDir);
+        return sInstance;
     }
 
     public static ResourceManager getInstance() {
@@ -48,15 +58,6 @@ public class ResourceManager {
         }
 
         //copy assets
-        assetsDir = context.getDir("assets", Context.MODE_PRIVATE);
-        uploadDir = new File(assetsDir, "upload");
-        if(!uploadDir.exists()) {
-            if(!uploadDir.mkdir()) {
-                Log.e(TAG, "Failed to create upload dir");
-                return;
-            }
-        }
-
         String[] assets = {"index.html", "main.js", "style.css", "countdown_video.mp4", "endcard.zip"};
         for(String asset : assets) {
             try {

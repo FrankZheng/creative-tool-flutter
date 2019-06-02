@@ -33,6 +33,7 @@ public class WebServer extends SimpleWebServer {
     public static final String LOCAL_HOST_URL = "http://127.0.0.1";
     private static final String TAG = WebServer.class.getSimpleName();
     private static final String MIME_TYPE_JSON = "application/json";
+    private static final int PORT = 8091;
 
     private String localHostUrl;
     private JSONObject configTemplate;
@@ -54,11 +55,15 @@ public class WebServer extends SimpleWebServer {
         return sInstance;
     }
 
-    public static void setInstance(WebServer instance) {
-        sInstance = instance;
+
+    public static WebServer create(File rootDir, File uploadDir, boolean quiet) {
+        if(sInstance == null) {
+            sInstance = new WebServer(PORT, rootDir, uploadDir, quiet);
+        }
+        return sInstance;
     }
 
-    public WebServer(int port, File rootDir, File uploadDir, boolean quiet) {
+    private WebServer(int port, File rootDir, File uploadDir, boolean quiet) {
         super(null, port, rootDir, quiet);
         localHostUrl = LOCAL_HOST_URL + ":" + port;
         this.uploadDir = uploadDir;

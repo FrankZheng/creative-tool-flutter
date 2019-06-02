@@ -1,6 +1,6 @@
 package com.vungle.creative.vungle_creative_tool;
 
-public class FlutterChannelDefines {
+public class Constants {
 
     public static final String kReturnValue = "return";
     public static final String kErrCode = "errCode";
@@ -34,9 +34,8 @@ public class FlutterChannelDefines {
     public static final String kEnableVerifyJsCalls = "enableVerifyRequiredJsCalls";
 
     public static final String kWebServerCallbackChan = "com.vungle.vcltool/webserverCallbacks";
-    public static final String kEndcardUploaded = "endcardUploaded";
+    public static final String kEndCardUploaded = "endcardUploaded";
 
     public static final String kAppChan = "com.vungle.vcltool/app";
     public static final String kCloseApp = "closeApp";
-    public static final String kInitialize = "initialize";
 }

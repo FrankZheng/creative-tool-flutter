@@ -97,7 +97,6 @@ class HomeViewState extends State<HomeView> implements WebServerListener, SDKDel
 
   void init() async {
     var conn = await (Connectivity().checkConnectivity());
-    await _appModel.init();
     var url = await WebServer.shared.getLocalhostURL();
     //user can upload creative only if has wifi
     var hasWIFI = conn == ConnectivityResult.wifi;
